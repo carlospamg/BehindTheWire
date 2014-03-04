@@ -1,0 +1,52 @@
+# Eagle files #
+###############
+# Backup files
+*.s#?
+*.b#?
+*.l#?
+
+# Project file below contains a serial number and references to the file structure on your computer.
+eagle.epf
+
+# CAM files
+*.$$$
+*.cmp
+*.ly2
+*.l15
+*.sol
+*.plc
+*.stc
+*.sts
+*.crc
+*.crs
+*.dri
+*.drl
+*.gpi
+*.pls
+*.drd
+*.drd.*
+*.info
+*.eps
+
+
+# SVN #
+#######
+.svn/
+
+
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Icon?
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+
+# others #
+##########
