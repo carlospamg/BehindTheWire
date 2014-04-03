@@ -6,6 +6,7 @@
   <script type="text/javascript" src="Blob.js"></script>
   <script type="text/javascript" src="FileSaver.min.js"></script>
   <script type="text/javascript" src="blockly_helper.js"></script>
+  <script type="text/javascript" src="../loadsketch/launchbatch.js"></script>
   <script>
   // Whitelist of blocks to keep.
   /*var newLanguage = {}
@@ -270,6 +271,8 @@ function init(blockly) {
             <td id="tab_xml" class="taboff" onclick="tabClick(this.id)">XML</td>
             <td class="tabmax">
               <button onclick="discard()">Discard</button>
+              <button onclick="launchbatch()">Load to Arduino</button>
+              <applet code="../loadsketch/ArduinoApplet.class" width="150px" height="50px"> </applet>
               <button onclick="save()">Save XML</button>
               <button id="fakeload">Load XML</button>
               <input type="file" id="load" style="display: none;"/>
