@@ -15,20 +15,24 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class Settings extends Frame {
 
+	private static final long serialVersionUID = 1L;
 	private static Settings singleton = null;
-	
+	private static String compilerLocation = "C:\\IDEs\\arduino-1.5.6-r2\\arduino.exe";
+	private static String sketchName = "BlocklyDuinoSketch";
+
 	private Label compilerLabel;
 	private TextField compilerText;
 	private Button compilerButton;
-	
-	private String compilerLocation = "C:\\IDEs\\arduino-1.5.6-r2\\arduino.exe";
-	
-	
-	/*********************/
-	/* Public operations */
-	/*********************/
-	
-	/* Constructor: Set layout */
+	private Button closeButton;
+
+
+	/* ********************************************************************* */
+	/*  Public methods                                                       */
+	/* ********************************************************************* */
+
+	/**
+	 * Constructor sets the layout 
+	 */
 	public Settings() {
 		this.setLayout(new FlowLayout());
 		this.setTitle("Arduino Settings");
@@ -36,16 +40,28 @@ public class Settings extends Frame {
 
 		compilerLabel = new Label("Compiler Location: ");
 		this.add(compilerLabel);
+
 		compilerText  = new TextField("C:\\IDEs\\arduino-1.5.6-r2\\arduino.exe");
 		this.add(compilerText);
-		compilerButton = new Button("Set Address");
+
+		compilerButton = new Button("Set Location");
 		this.add(compilerButton);
-		
+
+		closeButton = new Button("Close");
+		this.add(closeButton);
+
 		/* Settings action listener */
 		compilerButton.addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent arg0) {
+			public void actionPerformed(ActionEvent e) {
 				chooseCompiler();
+			}
+		});
+
+		/* Close button action listener */
+		closeButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
 			}
 		});
 
@@ -55,36 +71,54 @@ public class Settings extends Frame {
 				dispose();
 			}
 		});
-		
+
 		/* Do not draw on construction */
 		//this.setVisible(true);
 	}
-	
-	
-	/* Singleton instance */
+
+
+	/**
+	 * Singleton instance 
+	 */
 	public static Settings getInstance() {
 		if(singleton == null) {
 			singleton = new Settings();
 		}
 		return singleton;
 	}
-	
-	/* Relaunch window */
-	public static void relaunch() {
-		singleton.setVisible(true);
+
+
+	/**
+	 * Relaunches window 
+	 */
+	public void relaunch() {
+		getInstance().setVisible(true);
 	}
 
-	/* Compiler location getter */
-	public static String getCompilerLocation() {
-		return singleton.compilerLocation;
+
+	/**
+	 * Getter for compilerLocation
+	 */
+	public String getCompilerLocation() {
+		return Settings.compilerLocation;
 	} 
-	
-	
-	/**********************/
-	/* Private operations */
-	/**********************/
-	
-	/* Launches a file browser and updates compiler location*/
+
+
+	/**
+	 * Getter for sketchName
+	 */
+	public String getSketchName() {
+		return Settings.sketchName;
+	} 
+
+
+	/* ********************************************************************* */
+	/*  Private methods                                                      */
+	/* ********************************************************************* */
+
+	/**
+	 * Launches a file browser and updates compiler location
+	 */
 	private void chooseCompiler() {
 		JFileChooser chooser = new JFileChooser();
 		chooser.setFileFilter(

@@ -11,12 +11,24 @@ import java.io.*;
 
 public class ArduinoApplet extends Applet {
 	private static final long serialVersionUID = 1L;
+	
 	private Button buttonLoad;
 	private Button buttonSettings;
-	private Settings settingsInstance = Settings.getInstance();
+	private Settings settingsInstance;
 	
-	/* Constructor: Set layout */
+	
+	/* ********************************************************************* */
+	/*  Public methods                                                       */
+	/* ********************************************************************* */
+	
+	/**
+	 * Constructor sets the layout 
+	 */
 	public ArduinoApplet() throws HeadlessException {
+		/* Ensure the singleton for Settings is initialised */
+		settingsInstance = Settings.getInstance();
+		
+		/* Set layout */
 		this.setLayout(new FlowLayout());
 		buttonLoad = new Button("Load to Arduino");
 		this.add(buttonLoad);
@@ -27,35 +39,39 @@ public class ArduinoApplet extends Applet {
 		buttonLoad.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				loadSketch();
+				/* Create the sketch project, then load it */
+				String arduSketchLocation = createArduinoSketch(Settings.getInstance().getSketchName());
+				loadSketch(arduSketchLocation);
 			}
 		});
-		
 		
 		/* Settings action listener */
 		buttonSettings.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				Settings.relaunch();
+				Settings.getInstance().relaunch();
 			}
 		});
 	}
 
-	/* Action Listener: Execute command line commands */
-	private void loadSketch() {
+	/* ********************************************************************* */
+	/*  Private methods                                                      */
+	/* ********************************************************************* */
+	
+	/**
+	 *  Launches the command line to load Arduino Sketch
+	 */
+	private void loadSketch(String sketchLocation) {
 		Process pr;
-		
-		/* Create the sketch project */
-		String arduSketch = createArduinoSketch("test2");
 		
 		/* Build and load by command line */
 		StringBuilder arduinoCommands = new StringBuilder();
-		//Fixme: obviously this needs to be made dynamic or user selectable
-		arduinoCommands.append(Settings.getCompilerLocation());
+		arduinoCommands.append(settingsInstance.getCompilerLocation());
 		arduinoCommands.append(" --upload ");
+		//TODO: maybe add arduino settings to settings class, change manually for now
 		arduinoCommands.append("--board arduino:avr:diecimila:cpu=atmega168 ");
 		arduinoCommands.append("--verbose ");
-		arduinoCommands.append(arduSketch);
+		arduinoCommands.append(sketchLocation);
 
 		try {
 			/* Launch command line and capture stream*/
@@ -67,7 +83,9 @@ public class ArduinoApplet extends Applet {
 	}
 	
 
-	/* Reads text from the clipboard and writes it to an Arduino Sketch */
+	/**
+	 *  Reads text from the clipboard and writes it to an Arduino Sketch
+	 */
 	private static String createArduinoSketch(String filename){
 		File directory;
 		File sketchFile;
@@ -99,9 +117,10 @@ public class ArduinoApplet extends Applet {
 		return toReturn;
 	}
 	
-	/* Reads from the clipboard and returns string */
+	/**
+	 *  Reads from the clipboard and returns string
+	 */
 	private static String readSketch() {
-		
 		StringBuilder sketchCode = new StringBuilder();
 		sketchCode.append("int led = 13;\r\n");
 		sketchCode.append("void setup() {\r\n"); 
@@ -113,15 +132,16 @@ public class ArduinoApplet extends Applet {
 		sketchCode.append("  digitalWrite(led, LOW);\r\n");
 		sketchCode.append("  delay(1000);\r\n");
 		sketchCode.append("}\r\n");
-		
+
 		return sketchCode.toString();
 	}
 
-	/* Adds string to a file instance, then closes it */
-	static private void setFileContents(File aFile, String aContents) throws IOException {
-
+	/**
+	 *  Adds string to a file instance, then closes it 
+	 */
+	private static void setFileContents(File aFile, String aContents) throws IOException {
 		if (aFile == null) {
-		    throw new IllegalArgumentException("File should not be null.");
+			throw new IllegalArgumentException("File should not be null.");
 		}
 		
 		/* Create if it doesn't exits */
