@@ -11,12 +11,13 @@ import java.io.*;
 
 public class ArduinoApplet extends Applet {
 	private static final long serialVersionUID = 1L;
-	
+
 	private Button buttonLoad;
 	private Button buttonSettings;
 	private Settings settingsInstance;
-	
-	
+	private String sketchText = null;
+
+
 	/* ********************************************************************* */
 	/*  Public methods                                                       */
 	/* ********************************************************************* */
@@ -27,14 +28,14 @@ public class ArduinoApplet extends Applet {
 	public ArduinoApplet() throws HeadlessException {
 		/* Ensure the singleton for Settings is initialised */
 		settingsInstance = Settings.getInstance();
-		
+
 		/* Set layout */
 		this.setLayout(new FlowLayout());
 		buttonLoad = new Button("Load to Arduino");
 		this.add(buttonLoad);
 		buttonSettings = new Button("Settings");
 		this.add(buttonSettings);
-		
+
 		/* Load Sketch action listener */
 		buttonLoad.addActionListener(new ActionListener() {
 			@Override
@@ -44,7 +45,7 @@ public class ArduinoApplet extends Applet {
 				loadSketch(arduSketchLocation);
 			}
 		});
-		
+
 		/* Settings action listener */
 		buttonSettings.addActionListener(new ActionListener() {
 			@Override
@@ -52,6 +53,19 @@ public class ArduinoApplet extends Applet {
 				Settings.getInstance().relaunch();
 			}
 		});
+	}
+
+
+	/**
+	 * Received data from Javascript
+	 * @param dataText Text received
+	 */
+	public void processSketch(String jsSketchText) {
+		this.sketchText = jsSketchText;
+		Settings.getInstance().relaunch();
+		/* Create the sketch project, then load it */
+		String arduSketchLocation = createArduinoSketch(Settings.getInstance().getSketchName());
+		loadSketch(arduSketchLocation);
 	}
 
 	/* ********************************************************************* */
@@ -63,7 +77,7 @@ public class ArduinoApplet extends Applet {
 	 */
 	private void loadSketch(String sketchLocation) {
 		Process pr;
-		
+
 		/* Build and load by command line */
 		StringBuilder arduinoCommands = new StringBuilder();
 		arduinoCommands.append(settingsInstance.getCompilerLocation());
@@ -81,25 +95,25 @@ public class ArduinoApplet extends Applet {
 			e.printStackTrace();
 		}
 	}
-	
+
 
 	/**
 	 *  Reads text from the clipboard and writes it to an Arduino Sketch
 	 */
-	private static String createArduinoSketch(String filename){
+	private String createArduinoSketch(String filename){
 		File directory;
 		File sketchFile;
 		String toReturn = null;
-		
+
 		/* Prepare sketch project string */
 		StringBuilder sketchProject = new StringBuilder();
 		sketchProject.append(filename);
 		sketchProject.append("/");
 		sketchProject.append(filename);
 		sketchProject.append(".ino");
-		
+
 		/* Retrieve string for code */
-		String sketchText = readSketch();
+		String sketchText = this.readSketch();
 
 		/* Create sketch */
 		try {
@@ -116,34 +130,39 @@ public class ArduinoApplet extends Applet {
 
 		return toReturn;
 	}
-	
+
 	/**
 	 *  Reads from the clipboard and returns string
 	 */
-	private static String readSketch() {
-		StringBuilder sketchCode = new StringBuilder();
-		sketchCode.append("int led = 13;\r\n");
-		sketchCode.append("void setup() {\r\n"); 
-		sketchCode.append("  pinMode(led, OUTPUT);\r\n");
-		sketchCode.append("}\r\n");
-		sketchCode.append("void loop() {\r\n");
-		sketchCode.append("  digitalWrite(led, HIGH);\r\n");
-		sketchCode.append("  delay(1000);\r\n");
-		sketchCode.append("  digitalWrite(led, LOW);\r\n");
-		sketchCode.append("  delay(1000);\r\n");
-		sketchCode.append("}\r\n");
-
-		return sketchCode.toString();
+	private String readSketch() {
+		if(this.sketchText == null) {
+			StringBuilder sketchCode = new StringBuilder();
+			sketchCode.append("int led = 13;\r\n");
+			sketchCode.append("void setup() {\r\n"); 
+			sketchCode.append("  pinMode(led, OUTPUT);\r\n");
+			sketchCode.append("}\r\n");
+			sketchCode.append("void loop() {\r\n");
+			sketchCode.append("  digitalWrite(led, HIGH);\r\n");
+			sketchCode.append("  delay(1000);\r\n");
+			sketchCode.append("  digitalWrite(led, LOW);\r\n");
+			sketchCode.append("  delay(1000);\r\n");
+			sketchCode.append("}\r\n");
+			
+			return sketchCode.toString();
+		}
+		else {
+			return this.sketchText;
+		}
 	}
 
 	/**
 	 *  Adds string to a file instance, then closes it 
 	 */
-	private static void setFileContents(File aFile, String aContents) throws IOException {
+	private void setFileContents(File aFile, String aContents) throws IOException {
 		if (aFile == null) {
 			throw new IllegalArgumentException("File should not be null.");
 		}
-		
+
 		/* Create if it doesn't exits */
 		if (!aFile.exists()) {
 			try {
@@ -152,14 +171,14 @@ public class ArduinoApplet extends Applet {
 				e.printStackTrace();
 			}
 		}
-		
+
 		if (!aFile.isFile()) {
 			throw new IllegalArgumentException("Should not be a directory: " + aFile);
 		}
 		if (!aFile.canWrite()) {
 			throw new IllegalArgumentException("File cannot be written: " + aFile);
 		}
-		
+
 		/* Write to file (FileWriter always assumes default encoding is OK!) */
 		Writer output = new BufferedWriter(new FileWriter(aFile));
 		try {
