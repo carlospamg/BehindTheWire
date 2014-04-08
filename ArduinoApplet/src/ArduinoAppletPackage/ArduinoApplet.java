@@ -15,19 +15,21 @@ public class ArduinoApplet extends Applet {
 	private Button buttonLoad;
 	private Button buttonSettings;
 	private Settings settingsInstance;
-	private String sketchText = null;
+	private SketchCreator sketchProject;
 
 
 	/* ********************************************************************* */
 	/*  Public methods                                                       */
 	/* ********************************************************************* */
-	
+
 	/**
 	 * Constructor sets the layout 
 	 */
 	public ArduinoApplet() throws HeadlessException {
 		/* Ensure the singleton for Settings is initialised */
 		settingsInstance = Settings.getInstance();
+
+		sketchProject = new SketchCreator();
 
 		/* Set layout */
 		this.setLayout(new FlowLayout());
@@ -40,9 +42,8 @@ public class ArduinoApplet extends Applet {
 		buttonLoad.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				/* Create the sketch project, then load it */
-				String arduSketchLocation = createArduinoSketch(Settings.getInstance().getSketchName());
-				loadSketch(arduSketchLocation);
+				/* Create default sketch project and load it */
+				loadSketch(sketchProject.createArduinoSketch());
 			}
 		});
 
@@ -61,10 +62,9 @@ public class ArduinoApplet extends Applet {
 	 * @param dataText Text received
 	 */
 	public void processSketch(String jsSketchText) {
-		this.sketchText = jsSketchText;
 		Settings.getInstance().relaunch();
 		/* Create the sketch project, then load it */
-		String arduSketchLocation = createArduinoSketch(Settings.getInstance().getSketchName());
+		String arduSketchLocation = sketchProject.createArduinoSketch(jsSketchText);
 		loadSketch(arduSketchLocation);
 	}
 
@@ -93,98 +93,6 @@ public class ArduinoApplet extends Applet {
 					arduinoCommands.toString() + " && exit\" ");
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
-	}
-
-
-	/**
-	 *  Reads text from the clipboard and writes it to an Arduino Sketch
-	 */
-	private String createArduinoSketch(String filename){
-		File directory;
-		File sketchFile;
-		String toReturn = null;
-
-		/* Prepare sketch project string */
-		StringBuilder sketchProject = new StringBuilder();
-		sketchProject.append(filename);
-		sketchProject.append("/");
-		sketchProject.append(filename);
-		sketchProject.append(".ino");
-
-		/* Retrieve string for code */
-		String sketchText = this.readSketch();
-
-		/* Create sketch */
-		try {
-			directory = new File(filename);
-			directory.mkdir();
-			sketchFile = new File(sketchProject.toString());
-			setFileContents(sketchFile, sketchText);
-			toReturn = sketchFile.getAbsoluteFile().toString();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		return toReturn;
-	}
-
-	/**
-	 *  Reads from the clipboard and returns string
-	 */
-	private String readSketch() {
-		if(this.sketchText == null) {
-			StringBuilder sketchCode = new StringBuilder();
-			sketchCode.append("int led = 13;\r\n");
-			sketchCode.append("void setup() {\r\n"); 
-			sketchCode.append("  pinMode(led, OUTPUT);\r\n");
-			sketchCode.append("}\r\n");
-			sketchCode.append("void loop() {\r\n");
-			sketchCode.append("  digitalWrite(led, HIGH);\r\n");
-			sketchCode.append("  delay(1000);\r\n");
-			sketchCode.append("  digitalWrite(led, LOW);\r\n");
-			sketchCode.append("  delay(1000);\r\n");
-			sketchCode.append("}\r\n");
-			
-			return sketchCode.toString();
-		}
-		else {
-			return this.sketchText;
-		}
-	}
-
-	/**
-	 *  Adds string to a file instance, then closes it 
-	 */
-	private void setFileContents(File aFile, String aContents) throws IOException {
-		if (aFile == null) {
-			throw new IllegalArgumentException("File should not be null.");
-		}
-
-		/* Create if it doesn't exits */
-		if (!aFile.exists()) {
-			try {
-				aFile.createNewFile();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-
-		if (!aFile.isFile()) {
-			throw new IllegalArgumentException("Should not be a directory: " + aFile);
-		}
-		if (!aFile.canWrite()) {
-			throw new IllegalArgumentException("File cannot be written: " + aFile);
-		}
-
-		/* Write to file (FileWriter always assumes default encoding is OK!) */
-		Writer output = new BufferedWriter(new FileWriter(aFile));
-		try {
-			output.write(aContents);
-		} finally {
-			output.close();
 		}
 	}
 

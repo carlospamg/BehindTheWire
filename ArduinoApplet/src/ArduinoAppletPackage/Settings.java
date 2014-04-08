@@ -9,6 +9,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -34,6 +39,10 @@ public class Settings extends Frame {
 	 * Constructor sets the layout 
 	 */
 	public Settings() {
+		/* Read Settings file */
+		Settings.compilerLocation = readCompilerAddress();
+		
+		/* Setting up the layout */
 		this.setLayout(new FlowLayout());
 		this.setTitle("Arduino Settings");
 		this.setSize(600, 100);
@@ -41,7 +50,8 @@ public class Settings extends Frame {
 		compilerLabel = new Label("Compiler Location: ");
 		this.add(compilerLabel);
 
-		compilerText  = new TextField("C:\\IDEs\\arduino-1.5.6-r2\\arduino.exe");
+		compilerText  = new TextField(compilerLocation);
+		compilerText.setSize(200, 25);
 		this.add(compilerText);
 
 		compilerButton = new Button("Set Location");
@@ -121,13 +131,56 @@ public class Settings extends Frame {
 	 */
 	private void chooseCompiler() {
 		JFileChooser chooser = new JFileChooser();
-		chooser.setFileFilter(
-				new FileNameExtensionFilter("Compiler", "exe") );
+		chooser.setFileFilter( new FileNameExtensionFilter("Compiler", "exe") );
 
 		if(chooser.showOpenDialog(getParent()) == JFileChooser.APPROVE_OPTION) {
-			singleton.compilerLocation = chooser.getSelectedFile().getAbsolutePath();
-			singleton.compilerText.setText(getCompilerLocation());
+			try {
+				setCompilerAddress(chooser.getSelectedFile().getAbsolutePath());
+			} catch(FileNotFoundException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
+
+	/**
+	 * 
+	 * @param location
+	 * @throws FileNotFoundException
+	 */
+	private void setCompilerAddress(String location) throws FileNotFoundException {
+		singleton.compilerLocation = location;
+		singleton.compilerText.setText(getCompilerLocation());
+		
+		PrintWriter settingsFile = new PrintWriter("settings.txt");
+		settingsFile.print(location);
+		settingsFile.close();
+	}
+
+
+	/**
+	 * 
+	 * @return
+	 */
+	private String readCompilerAddress() {
+		BufferedReader br = null;
+		String sCurrentLine = null;
+
+		try {
+			br = new BufferedReader( new FileReader("settings.txt") );
+			sCurrentLine = br.readLine();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(br != null) {
+					br.close();
+				}
+			} catch (IOException ex) {
+				ex.printStackTrace();
+			}
+		}
+		
+		return sCurrentLine;
+	}
 }
