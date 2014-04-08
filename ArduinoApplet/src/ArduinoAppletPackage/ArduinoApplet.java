@@ -26,9 +26,8 @@ public class ArduinoApplet extends Applet {
 	 * Constructor sets the layout 
 	 */
 	public ArduinoApplet() throws HeadlessException {
-		/* Ensure the singleton for Settings is initialised */
+		/* Initialise objects */
 		settingsInstance = Settings.getInstance();
-
 		sketchProject = new SketchCreator();
 
 		/* Set layout */
@@ -62,7 +61,9 @@ public class ArduinoApplet extends Applet {
 	 * @param dataText Text received
 	 */
 	public void processSketch(String jsSketchText) {
+		/* Only for debugging, launch settings window to show a visual clue */
 		Settings.getInstance().relaunch();
+
 		/* Create the sketch project, then load it */
 		String arduSketchLocation = sketchProject.createArduinoSketch(jsSketchText);
 		loadSketch(arduSketchLocation);
@@ -71,7 +72,7 @@ public class ArduinoApplet extends Applet {
 	/* ********************************************************************* */
 	/*  Private methods                                                      */
 	/* ********************************************************************* */
-	
+
 	/**
 	 *  Launches the command line to load Arduino Sketch
 	 */
