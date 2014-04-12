@@ -7,6 +7,7 @@ public class StartMe{
 		// create an object of type CaesarCode which is the main applet class
 		ArduinoApplet theApplet = new ArduinoApplet();
 		theApplet.init();   // invoke the applet's init() method
+		theApplet.runAsJar();
 		theApplet.start();  // starts the applet
  
 		// Create a window (JFrame) and make applet the content pane.

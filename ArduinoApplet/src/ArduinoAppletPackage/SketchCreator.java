@@ -10,7 +10,6 @@ import java.io.Writer;
 public class SketchCreator {
 
 	private String sketchCode = null;
-	private String sketchLocation = null;
 
 
 	/* ********************************************************************* */
@@ -21,7 +20,7 @@ public class SketchCreator {
 	 *  Public Constructor creates default Arduino Sketch
 	 */
 	public SketchCreator() {
-		this.sketchLocation = createArduinoSketch();
+		createArduinoSketch();
 	}
 
 
@@ -30,7 +29,7 @@ public class SketchCreator {
 	 * @param sketchText Code for the sketch to be created
 	 */
 	public SketchCreator(String sketchText) {
-		this.sketchLocation = createArduinoSketch(sketchText);
+		createArduinoSketch(sketchText);
 	}
 
 
@@ -38,22 +37,8 @@ public class SketchCreator {
 	 * Creates default Arduino Sketch
 	 * @return location of the Sketch
 	 */
-	public String createArduinoSketch() {
-		return createArduinoSketch(this.sketchCode);
-	}
-
-
-	/**
-	 * Getter for the current Arduino Sketch location. If no Sketch exits,
-	 * it creates a default.
-	 * @return location of the Sketch
-	 */
-	public String getSketchLocation() {
-		if(sketchLocation == null) {
-			return createArduinoSketch();
-		} else {
-			return this.sketchLocation;
-		}
+	public void createArduinoSketch() {
+		createArduinoSketch(this.sketchCode);
 	}
 
 
@@ -62,7 +47,7 @@ public class SketchCreator {
 	 * @param sketchText Code for the Arduino Sketch
 	 * @return location of the Sketch
 	 */
-	public String createArduinoSketch(String sketchText) {
+	public void createArduinoSketch(String sketchText) {
 		File directory;
 		File sketchFile;
 		String sketchFileName = Settings.getInstance().getSketchName();
@@ -95,14 +80,16 @@ public class SketchCreator {
 			e.printStackTrace();
 		}
 
-		return location;
+		/* Set the full sketch path into the Settings class */
+		Settings.getInstance().setSketchLocation(location);
+		//System.out.println("s: " + location);
 	}
 
-	
+
 	/* ********************************************************************* */
 	/*  Private methods                                                      */
 	/* ********************************************************************* */
-	
+
 	/** 
 	 * Creates a default Sketch code
 	 * @return Default Arduino code

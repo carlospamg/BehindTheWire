@@ -1,21 +1,33 @@
 package ArduinoAppletPackage;
 
-import java.applet.Applet;
+import java.awt.BorderLayout;
 import java.awt.Button;
-import java.awt.FlowLayout;
-import java.awt.HeadlessException;
+import java.awt.CardLayout;
+import java.awt.Container;
+import java.awt.FileDialog;
+import java.awt.Label;
+import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.*;
+import java.io.IOException;
+import javax.swing.JApplet;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import netscape.javascript.JSObject;
 
 
-public class ArduinoApplet extends Applet {
+public class ArduinoApplet extends JApplet {
 	private static final long serialVersionUID = 1L;
 
+	private JPanel cards;
 	private Button buttonLoad;
 	private Button buttonSettings;
 	private Settings settingsInstance;
 	private SketchCreator sketchProject;
+	private Label compilerLabel;
+	private TextField compilerText;
+	private Button compilerButton;
+	private Boolean isApplet = true;
 
 
 	/* ********************************************************************* */
@@ -23,50 +35,50 @@ public class ArduinoApplet extends Applet {
 	/* ********************************************************************* */
 
 	/**
-	 * Constructor sets the layout 
+	 * Constructor unused for applet, init function to be called instead
 	 */
-	public ArduinoApplet() throws HeadlessException {
+	//public ArduinoApplet() {
+	//
+	//}
+
+
+	/**
+	 * Applet initialisation
+	 */
+	public void init() {
 		/* Initialise objects */
 		settingsInstance = Settings.getInstance();
 		sketchProject = new SketchCreator();
 
 		/* Set layout */
-		this.setLayout(new FlowLayout());
-		buttonLoad = new Button("Load to Arduino");
-		this.add(buttonLoad);
-		buttonSettings = new Button("Settings");
-		this.add(buttonSettings);
-
-		/* Load Sketch action listener */
-		buttonLoad.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				/* Create default sketch project and load it */
-				loadSketch(sketchProject.createArduinoSketch());
-			}
-		});
-
-		/* Settings action listener */
-		buttonSettings.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				Settings.getInstance().relaunch();
-			}
-		});
+		try {
+			javax.swing.SwingUtilities.invokeAndWait(new Runnable() {
+				public void run() {
+					createGui();
+				}
+			});
+		} catch (Exception e) {
+			System.err.println("createGui didn't complete successfully!");
+		}
 	}
 
 
 	/**
-	 * Received data from Javascript
+	 * Received data from Javascript, create and load sketch into Arduino
 	 * @param dataText Text received
 	 */
 	public void processSketch(String jsSketchText) {
-		/* Only for debugging, launch settings window to show a visual clue */
-		Settings.getInstance().relaunch();
-
 		/* Create the sketch project, then load it */
-		String arduSketchLocation = sketchProject.createArduinoSketch(jsSketchText);
-		loadSketch(arduSketchLocation);
+		sketchProject.createArduinoSketch(jsSketchText);
+		loadSketch();
+	}
+
+
+	/**
+	 * Configures this class to not run as a JAR file
+	 */
+	public void runAsJar() {
+		isApplet = false;
 	}
 
 	/* ********************************************************************* */
@@ -74,24 +86,132 @@ public class ArduinoApplet extends Applet {
 	/* ********************************************************************* */
 
 	/**
-	 *  Launches the command line to load Arduino Sketch
+	 * Sets the layout of the Applet GUI
 	 */
-	private void loadSketch(String sketchLocation) {
-		Process pr;
+	private void createGui() {
+		Container pane = getContentPane();
 
+		/* Components always visible */
+		JPanel permanentPanel= new JPanel();
+		buttonLoad = new Button("Load to Arduino");
+		permanentPanel.add(buttonLoad);
+		
+		buttonSettings = new Button("Settings");
+		permanentPanel.add(buttonSettings);
+		
+		/* Create the "cards", for now one has nothing */
+		JPanel appletCardNothing = new JPanel();
+		JPanel appletCardSettings = new JPanel();
+
+		compilerLabel = new Label("Compiler Location: ");
+		appletCardSettings.add(compilerLabel);
+
+		compilerText  = new TextField(Settings.getInstance().getCompilerLocation());
+		compilerText.setSize(200, 25);
+		appletCardSettings.add(compilerText);
+
+		compilerButton = new Button("Set Location");
+		appletCardSettings.add(compilerButton);
+
+		/* Create the panel to contain the cards */
+		cards = new JPanel(new CardLayout());
+		cards.add(appletCardNothing, "appletCardNothing");
+		cards.add(appletCardSettings, "appletCardSettings");
+		
+		pane.add(permanentPanel, BorderLayout.PAGE_START);
+		pane.add(cards, BorderLayout.CENTER);
+
+		/* **************** */
+		/* Action Listeners */
+		/* **************** */
+		/* Load Sketch action listener */
+		buttonLoad.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				/* Get the sketch code, create the project and load it */
+				if(isApplet == true ) {
+					/* Sketch code from Html */
+					sketchProject.createArduinoSketch(getSketch());
+				} else {
+					/* Default sketch code */
+					sketchProject.createArduinoSketch();
+				}
+				loadSketch();
+			}
+		});
+
+		/* Show Settings action listener */
+		buttonSettings.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				((CardLayout)cards.getLayout()).next(cards);
+			}
+		});
+		
+		/* Select Compiler Action listener*/
+		compilerButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				chooseCompiler();
+			}
+		});
+	}
+
+
+	/**
+	 * Executes a Javascript function in the parent html website that returns the sketch code
+	 * @return Sketch code from html/javascript
+	 */
+	private String getSketch() {
+		JSObject win = JSObject.getWindow(this);
+		return (String)win.eval("getSketchToApplet();");
+	}
+
+
+	/**
+	 * Launches a file browser and updates compiler location
+	 */
+	private void chooseCompiler() {
+		FileDialog fd = new FileDialog(new JFrame(), "Choose the Arduino IDE executable", FileDialog.LOAD);
+		fd.setDirectory("C:\\");
+		fd.setFile("*.exe");
+		fd.setVisible(true);
+		StringBuilder compilerFullPath = new StringBuilder();
+		compilerFullPath.append(fd.getDirectory());
+		compilerFullPath.append(fd.getFile());
+		if (fd.getFile() == null) {
+			compilerText.setText("Select File");
+		} else {
+			compilerText.setText(compilerFullPath.toString() );
+			settingsInstance.setCompilerAddress(compilerFullPath.toString());
+		}
+	}
+
+
+	/**
+	 *  Launches the command line to load the Arduino Sketch
+	 */
+	private void loadSketch() {
 		/* Build and load by command line */
 		StringBuilder arduinoCommands = new StringBuilder();
+		
+		/* First the command line text */
+		arduinoCommands.append("cmd start cmd.exe /K \"");
+		
+		/* Now the arduino commands */
 		arduinoCommands.append(settingsInstance.getCompilerLocation());
 		arduinoCommands.append(" --upload ");
 		//TODO: maybe add arduino settings to settings class, change manually for now
 		arduinoCommands.append("--board arduino:avr:diecimila:cpu=atmega168 ");
-		arduinoCommands.append("--verbose ");
-		arduinoCommands.append(sketchLocation);
-
+		arduinoCommands.append("--verbose \"");
+		arduinoCommands.append(Settings.getInstance().getSketchLocation());
+		
+		/* Finish with an exit to close the command prompt */
+		arduinoCommands.append("\" && exit\" ");
 		try {
 			/* Launch command line and capture stream*/
-			pr = Runtime.getRuntime().exec("cmd /c start cmd.exe /K \"" +
-					arduinoCommands.toString() + " && exit\" ");
+			Runtime.getRuntime().exec(arduinoCommands.toString());
+			System.out.println(arduinoCommands.toString());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
