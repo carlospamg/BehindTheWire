@@ -1,19 +1,26 @@
 <html>
 <meta http-equiv="Content-Type" content="text/html; charset=Cp1252"/>
 <head>
+
    <title> Java Applet Test </title>
    <script>
-      function sendSketchToApplet() {   
-         //document.applets[0].processSketch('This text came from JavaScript');
+      function sendSketchToApplet() {
          var myApp = document.applets['ArduApplet'];
          myApp.processSketch(document.getElementById("sketchTextArea").value);
-
-         //document.getElementById("sketchTextArea").value =  'TEST' + document.getElementById("sketchTextArea").value;
+         document.getElementById("sketchTextArea").value =  'TEST' + document.getElementById("sketchTextArea").value;
+      }
+      
+      function getSketchToApplet() {
+         return document.getElementById("sketchTextArea").value;
       }
    </script>
+
 </head>
 
 <body>
+
+   <p>This is the html file in the gitdevelop blocky html-js folder</p>
+
    <textarea rows="10" cols="500" name="sketchCode" id="sketchTextArea">
 int led = 13; //from html
 void setup() {
@@ -29,7 +36,7 @@ void loop() {
 
    <button type="button" onclick="sendSketchToApplet()">Send Sketch to the Applet!</button> 
 
-   <applet code=ArduinoAppletPackage.ArduinoApplet.class name="ArduApplet" width="200" height="200"> </applet>
+   <applet code=ArduinoAppletPackage.ArduinoApplet.class archive="ArduinoApplet.jar" name="ArduApplet" id ="ArduApplet" width="200" height="75"> </applet>
 
 </body>
 </html>
