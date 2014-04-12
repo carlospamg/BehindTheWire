@@ -3,16 +3,20 @@ package ArduinoAppletPackage;
 import java.awt.BorderLayout;
 import java.awt.Button;
 import java.awt.CardLayout;
+import java.awt.Color;
 import java.awt.Container;
 import java.awt.FileDialog;
+import java.awt.FlowLayout;
 import java.awt.Label;
 import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+
 import javax.swing.JApplet;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
 import netscape.javascript.JSObject;
 
 
@@ -37,9 +41,9 @@ public class ArduinoApplet extends JApplet {
 	/**
 	 * Constructor unused for applet, init function to be called instead
 	 */
-	//public ArduinoApplet() {
-	//
-	//}
+	public ArduinoApplet() {
+	
+	}
 
 
 	/**
@@ -64,7 +68,7 @@ public class ArduinoApplet extends JApplet {
 
 
 	/**
-	 * Received data from Javascript, create and load sketch into Arduino
+	 * Receives data from Javascript, creates and loads sketch into Arduino
 	 * @param dataText Text received
 	 */
 	public void processSketch(String jsSketchText) {
@@ -92,17 +96,20 @@ public class ArduinoApplet extends JApplet {
 		Container pane = getContentPane();
 
 		/* Components always visible */
-		JPanel permanentPanel= new JPanel();
+		JPanel permanentPanel= new JPanel( new FlowLayout(FlowLayout.RIGHT) );
 		buttonLoad = new Button("Load to Arduino");
 		permanentPanel.add(buttonLoad);
-		
+		permanentPanel.setBackground(Color.WHITE);
+
 		buttonSettings = new Button("Settings");
 		permanentPanel.add(buttonSettings);
-		
+
 		/* Create the "cards", for now one has nothing */
 		JPanel appletCardNothing = new JPanel();
+		appletCardNothing.setBackground(Color.WHITE);
 		JPanel appletCardSettings = new JPanel();
-
+		appletCardSettings.setBackground(Color.WHITE);
+		
 		compilerLabel = new Label("Compiler Location: ");
 		appletCardSettings.add(compilerLabel);
 
@@ -117,9 +124,9 @@ public class ArduinoApplet extends JApplet {
 		cards = new JPanel(new CardLayout());
 		cards.add(appletCardNothing, "appletCardNothing");
 		cards.add(appletCardSettings, "appletCardSettings");
-		
-		pane.add(permanentPanel, BorderLayout.PAGE_START);
+
 		pane.add(cards, BorderLayout.CENTER);
+		pane.add(permanentPanel, BorderLayout.PAGE_END);
 
 		/* **************** */
 		/* Action Listeners */
@@ -147,7 +154,7 @@ public class ArduinoApplet extends JApplet {
 				((CardLayout)cards.getLayout()).next(cards);
 			}
 		});
-		
+
 		/* Select Compiler Action listener*/
 		compilerButton.addActionListener(new ActionListener() {
 			@Override
@@ -182,7 +189,7 @@ public class ArduinoApplet extends JApplet {
 		if (fd.getFile() == null) {
 			compilerText.setText("Select File");
 		} else {
-			compilerText.setText(compilerFullPath.toString() );
+			compilerText.setText(compilerFullPath.toString());
 			settingsInstance.setCompilerAddress(compilerFullPath.toString());
 		}
 	}
