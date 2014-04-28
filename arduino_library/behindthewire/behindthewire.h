@@ -1,53 +1,68 @@
 // -*- Mode: C++; c-basic-offset: 8; indent-tabs-mode: nil -*-
-
-#include <Servo.h>
-
-#if defined(ARDUINO) && ARDUINO >= 100
-#include "Arduino.h"
-#else
-#include "WProgram.h"
-#endif
-
 #ifndef behindthewire_h
 #define behindthewire_h
 
-//Defines
-#define PRESSED HIGH
-#define NOT_PRESSED LOW
-#define ON HIGH
-#define OFF LOW
+#if defined(ARDUINO) && ARDUINO >= 100
+   #include "Arduino.h"
+#else
+   #include "WProgram.h"
+#endif
+#include "../Servo/Servo.h"
 
-#define RedLight 13
-#define YellowLight 12
-#define GreenLight 11
-#define OnButton 9
-#define OffButton 8
+// States
+#define PRESSED           HIGH
+#define NOT_PRESSED       LOW
+#define ON                HIGH
+#define OFF               LOW
+#define UP                HIGH
+#define DOWN              LOW
 
-// Landing gear
-#define UpLight 13
-#define DownLight 11
-#define UpButton 9
-#define DownButton 8
-#define NotReadyLight 12
-#define SERVO_PIN 6
+// IO pins
+#define LedRedPin         13
+#define LedYellowPin      12
+#define LedGreenPin       11
+#define ButtonTopPin      9
+#define ButtonBottomPin   8
+#define PotPin            A0
+#define ServoPin          6
+#define MotorPin          3
 
-#define UP 1
-#define DOWN 0
+// LED and Button pins
+#define RedLight          LedRedPin
+#define YellowLight       LedYellowPin
+#define GreenLight        LedGreenPin
+#define OnButton          ButtonTopPin
+#define OffButton         ButtonBottomPin
 
-#define Engine 3
-#define Throttle A0
+// Landing Gear
+#define UpLight           LedRedPin
+#define DownLight         LedGreenPin
+#define NotReadyLight     LedYellowPin
+#define UpButton          ButtonTopPin
+#define DownButton        ButtonBottomPin
+
+// Engine Speed
+#define Engine            MotorPin
+#define Throttle          PotPin
 
 // Tunable constants for landing gear
-#define landingGearDownPosition 1600
-#define landingGearUpPosition 2400
-#define landingGearTransitionSpeed 20
+#define landingGearDownPosition      1600
+#define landingGearUpPosition        2400
+#define landingGearTransitionSpeed   20
 
-class behindthewire {
 
-	public:
-		void landingGearPrepare();
-		void landingGearUp();
-		void landingGearDown();
+class BehindTheWire {
+public:
+   BehindTheWire();
+   //~BehindTheWire();
+   //void begin();
+   void landingGearPrepare();
+   void landingGearUp();
+   void landingGearDown();
+   
+private:
+   static Servo landingGearServo;
+   byte lgPos;
 };
 
 #endif // behindthewire_h

@@ -1,29 +1,32 @@
-#include <behindthewire.h>
-#include <Servo.h>
+#include <BehindTheWire.h>
+//FIXME: Ideally we should remove this header from here and keep it within
+//       the BehindTheWire library, hoewever it won't compile otherwise.
+#include <Servo.h> 
 
-behindthewire functions;
+BehindTheWire functions;
 
 int ButtonUp = 0;
 int ButtonDown = 0;
 
 void setup() {
-  pinMode(UpButton,INPUT);              // Make the Up Button an Input
-  pinMode(DownButton,INPUT);            // Make the Down Button an Input
-  functions.landingGearPrepare();	// Set up the landing gear
+
+  pinMode(UpButton,INPUT);                // Make the Up Button an Input
+  pinMode(DownButton,INPUT);              // Make the Down Button an Input
+  functions.landingGearPrepare();         // Set up the landing gear
+
 }
 
 void loop() {
 
-  ButtonUp = digitalRead(UpButton);     // Get the state of Up Button
-  ButtonDown = digitalRead(DownButton); // Get the state of Down Button
+  ButtonUp = digitalRead(UpButton);       // Get the state of Up Button
+  ButtonDown = digitalRead(DownButton);   // Get the state of Down Button
 
-  if (ButtonUp == PRESSED)
-  {
+  if(ButtonUp == PRESSED) {
     functions.landingGearUp();
   }
     
-  if (ButtonDown == PRESSED)
-  {
+  if(ButtonDown == PRESSED) {
     functions.landingGearDown();
   }
+
 }

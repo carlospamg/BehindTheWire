@@ -1,24 +1,22 @@
-#include <Servo.h>
-#include <behindthewire.h>
+#include <BehindTheWire.h>
 
 int power = 0;
 
-void setup()
-{ 
+void setup() { 
+
   pinMode(Engine,OUTPUT);
+  
 }
 
-void loop()
-{
+void loop() {
+
    power = map(analogRead(Throttle),0,1024,0,255);
    analogWrite(Engine, power); 
-   if (power > 200)
-   {
+   if (power > 200) {
       digitalWrite(RedLight,ON);
    }
-   else
-   {
+   else {
       digitalWrite(RedLight,OFF);
    }
-}
 
+}

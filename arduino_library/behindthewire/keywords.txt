@@ -1,0 +1,21 @@
+#######################################
+# Syntax Coloring Map BehindTheWire
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+BehindTheWire	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+landingGearPrepare	KEYWORD2
+landingGearUp	KEYWORD2
+landingGearDown	KEYWORD2
+
+#######################################
+# Constants (LITERAL1)
+# Todo once the library is finished
+#######################################

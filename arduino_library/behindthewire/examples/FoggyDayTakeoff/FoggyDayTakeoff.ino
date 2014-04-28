@@ -1,6 +1,4 @@
-#include <behindthewire.h>      //The magic behind the wire
-#include <Servo.h>
-
+#include <BehindTheWire.h>      //The magic behind the wire
 
 void setup() {
 
@@ -14,4 +12,5 @@ void loop() {
   delay(1000);                  // Wait for 1 second (1000ms)
   digitalWrite(RedLight,OFF);   // Turn the red light off
   delay(1000);                  // Wait for 1 second (1000ms)
+
 }

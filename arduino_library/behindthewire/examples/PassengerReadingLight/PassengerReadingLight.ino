@@ -1,5 +1,4 @@
-#include <behindthewire.h>
-#include <Servo.h>
+#include <BehindTheWire.h>
 
 int ButtonOn = 0;
 int ButtonOff = 0;
@@ -14,17 +13,17 @@ void setup() {
 
 void loop() {
 
-  ButtonOn = digitalRead(OnButton);    //Get the state of On Button
-  ButtonOff = digitalRead(OffButton);  //Get the state of Off Button
+  ButtonOn = digitalRead(OnButton);     //Get the state of On Button
+  ButtonOff = digitalRead(OffButton);   //Get the state of Off Button
 
-  if (ButtonOn == PRESSED)             // Has On button been pressed?
-  {
-    digitalWrite(RedLight,ON);        // Turn the red light on
+  if(ButtonOn == PRESSED) {             // Has On button been pressed?
+    digitalWrite(RedLight,ON);          // Turn the red light on
   }
-  if (ButtonOff == PRESSED)       // Has Off button been pressed?
-  {
-    digitalWrite(RedLight,OFF);       // Turn the red light off
+  
+  if(ButtonOff == PRESSED) {            // Has Off button been pressed?
+    digitalWrite(RedLight,OFF);         // Turn the red light off
   }
   
   delay(100);
+
 }
