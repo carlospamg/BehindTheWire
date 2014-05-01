@@ -78,9 +78,15 @@ var profile = {
 		//53 digital
 		//15 analog
 	},
+	//Behind the Wire Arduino profile
+	arduino_btw: {
+        description: "Arduino Behind The Wire",
+        digital : [["RedLight","RedLight"],["OnButton","OnButton"],["OffButton","OffButton"],["YellowLight","YellowLight"],["GreenLight","GreenLight"],["UpButton","UpButton"],["DownButton","DownButton"]],
+        analog : [["Engine","Engine"],["Throttle","Throttle"]]
+    },
 }
 //set default profile to arduino standard-compatible board
-profile["default"] = profile["arduino"];
+profile["default"] = profile["arduino_btw"];
 //alert(profile.default.digital[0]);
 
 /**
