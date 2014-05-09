@@ -1,6 +1,4 @@
 #include <BehindTheWire.h>
-//FIXME: Ideally we should remove this header from here and keep it within
-//       the BehindTheWire library, hoewever it won't compile otherwise.
 #include <Servo.h> 
 
 BehindTheWire functions;

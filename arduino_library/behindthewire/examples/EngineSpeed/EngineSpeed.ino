@@ -4,14 +4,17 @@ int power = 0;
 
 void setup() { 
 
-  pinMode(Engine,OUTPUT);
+  pinMode(EngineLeft,OUTPUT);
+  pinMode(EngineRight,OUTPUT);
   
 }
 
 void loop() {
 
    power = map(analogRead(Throttle),0,1024,0,255);
-   analogWrite(Engine, power); 
+   analogWrite(EngineLeft, power);
+   analogWrite(EngineRight, power);
+
    if (power > 200) {
       digitalWrite(RedLight,ON);
    }

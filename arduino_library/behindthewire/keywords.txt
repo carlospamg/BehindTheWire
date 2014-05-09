@@ -17,5 +17,27 @@ landingGearDown	KEYWORD2
 
 #######################################
 # Constants (LITERAL1)
-# Todo once the library is finished
 #######################################
+PRESSED	LITERAL1
+NOT_PRESSED	LITERAL1
+ON	LITERAL1
+OFF	LITERAL1
+UP	LITERAL1
+DOWN	LITERAL1
+
+RedLight	LITERAL1
+YellowLight	LITERAL1
+WhiteLight	LITERAL1
+GreenLight	LITERAL1
+OnButton	LITERAL1
+OffButton	LITERAL1
+
+UpLight	LITERAL1
+DownLight	LITERAL1
+NotReadyLight	LITERAL1
+UpButton	LITERAL1
+DownButton	LITERAL1
+
+EngineLeft	LITERAL1
+EngineRight	LITERAL1
+Throttle	LITERAL1

@@ -1,4 +1,4 @@
-#include <behindthewire.h>      //The magic behind the wire
+#include <BehindTheWire.h>      //The magic behind the wire
 #include <Servo.h>
 
 
