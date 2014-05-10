@@ -74,10 +74,10 @@
 // Engine Speed
 #define Throttle          PotPin
 
-// Tunable constants for landing gear
-#define landingGearDownPosition      1600
-#define landingGearUpPosition        2400
-#define landingGearTransitionSpeed   20
+// Tunable constants for servo
+#define servoRightPosition     1600
+#define servoLeftPosition      2400
+#define servoTransitionSpeed   20
 
 
 class BehindTheWire {
@@ -86,17 +86,26 @@ public:
    ~BehindTheWire();
    //void begin();
    //void end();
+
    void landingGearPrepare();
    void landingGearUp();
    void landingGearDown();
-   
+
+   void rudderPrepare();
+   void rudderLeft();
+   void rudderRight();
+   void rudderCentre();
+   void rudderSetPosition(byte newPosition);
+
 private:
    byte lgPos;
 
    // Pointers with dynamic memory allocation is not ideal 
    // in this kind of system, but it resolves having to
    // import the Servo library when rudder is not in use.
-   Servo *landingGearServo;
+   Servo *servoInstance;
+
+   void servoPrepare();
 };
 
 #endif // _BehindTheWire_h

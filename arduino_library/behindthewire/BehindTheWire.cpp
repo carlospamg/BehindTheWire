@@ -1,23 +1,119 @@
 #include "BehindTheWire.h"
 
-// Constructor
+
+/** Constructor */
 BehindTheWire::BehindTheWire() {
    lgPos = UP;
    // The servo instance is only allocated on landingGearPrepare()
 }
 
 
-// Destructor 
+/** Destructor */
 BehindTheWire::~BehindTheWire() {
   // avr-g++ implementation of delete uses free, which already checks for null
-  delete landingGearServo;
+  delete servoInstance;
 }
 
 
-// Initiate the servo and set the landing gear to defaults
+/** Instantiates the servo pointer and configures it */
+void BehindTheWire::servoPrepare() {
+   servoInstance = new Servo();
+   servoInstance->attach(ServoPin, servoRightPosition, servoLeftPosition);
+}
+
+
+// /////////////////////////////
+//  Rudder Specific functions //
+// /////////////////////////////
+
+/** Initiates the servo and sets the rudder to the centre position */
+void BehindTheWire::rudderPrepare() {
+   servoPrepare();
+   rudderCentre();
+}
+
+
+/** Move the rudder to the LEFT position */
+void BehindTheWire::rudderLeft() {
+   if(servoInstance == NULL) {
+      // Return instead of calling servoPrepare() so that it
+      // is clear something is not working w/o crashing
+      return;
+   }
+
+   byte currentPosition = servoInstance->read();
+   if(currentPosition < 180) {
+      for(byte i=currentPosition; i<180; i++) {
+         servoInstance->write(i);
+         delay(servoTransitionSpeed);
+      }
+   }
+}
+
+
+/** Move the rudder to the CENTRE position */
+void BehindTheWire::rudderCentre() {
+   if(servoInstance == NULL) {
+      // Return instead of calling servoPrepare() so that it
+      // is clear something is not working w/o crashing
+      return;
+   }
+   rudderSetPosition(90);
+}
+
+
+/** Move the rudder to the RIGHT position */
+void BehindTheWire::rudderRight() {
+   if(servoInstance == NULL) {
+      // Return instead of calling servoPrepare() so that it
+      // is clear something is not working w/o crashing
+      return;
+   }
+
+   byte currentPosition = servoInstance->read();
+   if(currentPosition > 0) {
+      for(byte i=currentPosition; i>0; i--) {
+         servoInstance->write(i);
+         delay(servoTransitionSpeed);
+      }
+   }
+}
+
+
+/** Sets the servo position to the input argument */
+void BehindTheWire::rudderSetPosition(byte newPosition) {
+   if(servoInstance == NULL) {
+      // Return instead of calling servoPrepare() so that it
+      // is clear something is not working w/o crashing
+      return;
+   }
+
+   byte currentPosition = servoInstance->read();
+   if(newPosition > currentPosition) {
+      // Check the input is not larger than 180 degrees
+      newPosition = (newPosition>180) ? 180 : newPosition;
+      for(byte i=currentPosition; i<newPosition; i++) {
+         servoInstance->write(i);
+         delay(servoTransitionSpeed);
+      }   
+   } else if(newPosition < currentPosition) {
+      //byte is unsigned, no need to check for <0
+      for(byte i=currentPosition; i>newPosition; i--) {
+         servoInstance->write(i);
+         delay(servoTransitionSpeed);
+      }
+   }
+   // Else, the current position and desired are the same
+}
+
+
+// ////////////////////////////////////
+//   Landing Gear Specific functions //
+// ////////////////////////////////////
+
+/** Initiate the servo and set the landing gear to defaults */
 void BehindTheWire::landingGearPrepare() {
-   landingGearServo = new Servo();
-   landingGearServo->attach(ServoPin, landingGearDownPosition, landingGearUpPosition);
+   servoPrepare();
 
    digitalWrite(UpLight, ON);
    digitalWrite(NotReadyLight, OFF);
@@ -27,24 +123,36 @@ void BehindTheWire::landingGearPrepare() {
 }
 
 
-// Description should go here
+/** Move the landing gear to the UP position */
 void BehindTheWire::landingGearUp() {
+   if(servoInstance == NULL) {
+      // Return instead of calling servoPrepare() so that it
+      // is clear something is not working w/o crashing
+      return;
+   }
+
    if(lgPos == DOWN) {
       for(byte i=0; i<180; i++) {
-         landingGearServo->write(i);
-         delay(landingGearTransitionSpeed);
+         servoInstance->write(i);
+         delay(servoTransitionSpeed);
       }
    }
    lgPos = UP;
 }
 
 
-// Description should go here
+/** Move the landing gear to the DOWN position */
 void BehindTheWire::landingGearDown() {
+   if(servoInstance == NULL) {
+      // Return instead of calling servoPrepare() so that it
+      // is clear something is not working w/o crashing
+      return;
+   }
+
    if(lgPos == UP) {
       for(byte i=180; i>0; i--) {
-         landingGearServo->write(i);
-         delay(landingGearTransitionSpeed);
+         servoInstance->write(i);
+         delay(servoTransitionSpeed);
       }
    }
    lgPos = DOWN;
