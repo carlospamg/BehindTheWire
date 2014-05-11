@@ -67,23 +67,23 @@ Blockly.Arduino.ORDER_NONE = 99;          // (...)
  *
  */
 var profile = {
-	arduino: {
-		description: "Arduino standard-compatible board",
-		digital : [["1", "1"], ["2", "2"], ["3", "3"], ["4", "4"], ["5", "5"], ["6", "6"], ["7", "7"], ["8", "8"], ["9", "9"], ["10", "10"], ["11", "11"], ["12", "12"], ["13", "13"], ["A0", "A0"], ["A1", "A1"], ["A2", "A2"], ["A3", "A3"], ["A4", "A4"], ["A5", "A5"]],
-		analog : [["A0", "A0"], ["A1", "A1"], ["A2", "A2"], ["A3", "A3"], ["A4", "A4"], ["A5", "A5"]],
-        serial : 9600,
-	},
-	arduino_mega:{
-		description: "Arduino Mega-compatible board",
-		//53 digital
-		//15 analog
-	},
-	//Behind the Wire Arduino profile
-	arduino_btw: {
-        description: "Arduino Behind The Wire",
-        digital : [["RedLight","RedLight"],["OnButton","OnButton"],["OffButton","OffButton"],["YellowLight","YellowLight"],["GreenLight","GreenLight"],["UpButton","UpButton"],["DownButton","DownButton"]],
-        analog : [["Engine","Engine"],["Throttle","Throttle"]]
-    },
+  arduino: {
+    description: "Arduino standard-compatible board",
+    digital : [["1", "1"], ["2", "2"], ["3", "3"], ["4", "4"], ["5", "5"], ["6", "6"], ["7", "7"], ["8", "8"], ["9", "9"], ["10", "10"], ["11", "11"], ["12", "12"], ["13", "13"], ["A0", "A0"], ["A1", "A1"], ["A2", "A2"], ["A3", "A3"], ["A4", "A4"], ["A5", "A5"]],
+    analog : [["A0", "A0"], ["A1", "A1"], ["A2", "A2"], ["A3", "A3"], ["A4", "A4"], ["A5", "A5"]],
+    serial : 9600,
+  },
+  arduino_mega:{
+  description: "Arduino Mega-compatible board",
+    //53 digital
+    //15 analog
+  },
+  //Behind the Wire Arduino profile
+  arduino_btw: {
+    description: "Arduino Behind The Wire",
+    digital : [["RedLight","RedLight"],["OnButton","OnButton"],["OffButton","OffButton"],["YellowLight","YellowLight"],["GreenLight","GreenLight"],["WhiteLight","WhiteLight"],["UpButton","UpButton"],["DownButton","DownButton"],["LeftButton","LeftButton"],["RightButton","RightButton"]],
+    analog : [["EngineLeft","EngineLeft"],["EngineRight","EngineRight"],["Throttle","Throttle"]]
+  },
 }
 //set default profile to arduino standard-compatible board
 profile["default"] = profile["arduino_btw"];
@@ -129,7 +129,7 @@ Blockly.Arduino.finish = function(code) {
   code = 'void loop() \n{\n' + code + '\n}';
 
   // Convert the definitions dictionary into a list.
-  var imports = ["#include <behindthewire.h>\n"];
+  var imports = ["#include <BehindTheWire.h>\n"];
   var definitions = [];
   for (var name in Blockly.Arduino.definitions_) {
     var def = Blockly.Arduino.definitions_[name];
