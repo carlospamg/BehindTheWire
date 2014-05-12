@@ -209,7 +209,7 @@ public class ArduinoApplet extends JApplet {
 		arduinoCommands.append(settingsInstance.getCompilerLocation());
 		arduinoCommands.append(" --upload ");
 		//TODO: maybe add arduino settings to settings class, change manually for now
-		arduinoCommands.append("--board arduino:avr:diecimila:cpu=atmega168 ");
+		arduinoCommands.append("--board arduino:avr:uno ");
 		arduinoCommands.append("--verbose \"");
 		arduinoCommands.append(Settings.getInstance().getSketchLocation());
 		
