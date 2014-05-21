@@ -1,6 +1,11 @@
-The initial prototyping shield was designed to be electrically similar to the original
-BTW circuit. The same Arduino Uno pins were used, and the schematic can be considered
-to be the same with the following exceptions:
+The final hardware uses the following pins:
 
-  - Pull up resistors in original were XXXohms, 1.2kohms in shield
-  - Diode in original was XXXX, shield has XXX.
+LedRedPin         A0
+LedWhitePin       A1
+LedGreenPin       10
+ButtonLeftPin     A2
+ButtonRightPin    A3
+PotPin            A5
+ServoPin          11
+MotorLeftPin      3
+MotorRightPin     5
