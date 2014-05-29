@@ -82,8 +82,10 @@ var profile = {
   arduino_btw: {
     description: "Arduino Behind The Wire",
     digital : [["RedLight","RedLight"],["OnButton","OnButton"],["OffButton","OffButton"],["YellowLight","YellowLight"],["GreenLight","GreenLight"],["WhiteLight","WhiteLight"],["UpButton","UpButton"],["DownButton","DownButton"],["LeftButton","LeftButton"],["RightButton","RightButton"]],
-    analog : [["EngineLeft","EngineLeft"],["EngineRight","EngineRight"],["Throttle","Throttle"]]
-  },
+    analog : [["EngineLeft","EngineLeft"],["EngineRight","EngineRight"],["Throttle","Throttle"]],
+    nav_lights : [["Red (Left Wing)","RedLight"],["Green (Right Wing)","GreenLight"],["White (Tail)","WhiteLight"]],
+    buttons : [["Left","LeftButton"],["Right","RightButton"]],
+  }
 }
 //set default profile to arduino standard-compatible board
 profile["default"] = profile["arduino_btw"];
