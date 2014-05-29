@@ -85,6 +85,8 @@ var profile = {
     analog : [["EngineLeft","EngineLeft"],["EngineRight","EngineRight"],["Throttle","Throttle"]],
     nav_lights : [["Red (Left Wing)","RedLight"],["Green (Right Wing)","GreenLight"],["White (Tail)","WhiteLight"]],
     buttons : [["Left","LeftButton"],["Right","RightButton"]],
+    rudder_angle: [["0","0"],["30","30"],["60","60"],["90","90"],["120","120"],["150","150"],["180","180"]],
+    engines : [["Engine Left","EngineLeft"],["Engine Right","EngineRight"]],
   }
 }
 //set default profile to arduino standard-compatible board
