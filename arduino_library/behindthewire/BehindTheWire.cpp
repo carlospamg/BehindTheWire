@@ -58,7 +58,7 @@ void BehindTheWire::rudderCentre() {
       // is clear something is not working w/o crashing
       return;
    }
-   rudderSetPosition(90);
+   rudderSetPosition(0);
 }
 
 
@@ -80,30 +80,36 @@ void BehindTheWire::rudderRight() {
 }
 
 
-/** Sets the servo position to the input argument */
-void BehindTheWire::rudderSetPosition(byte newPosition) {
+/** Sets the servo position to the input argument
+ *  The input is based on a -45 to 45 degrees format and uses the
+ *  int argument as it's the only type we general introduce in workshops
+ */
+void BehindTheWire::rudderSetPosition(int newPosition) {
    if(servoInstance == NULL) {
       // Return instead of calling servoPrepare() so that it
       // is clear something is not working w/o crashing
       return;
    }
 
+   // Conver -45,45 range to 0,180 range and clipping out of range values
+   newPosition <<= 1;
+   newPosition += 90;
+   newPosition = (newPosition>180) ? 180 : newPosition;
+   newPosition = (newPosition<0) ? 0 : newPosition;
+
    byte currentPosition = servoInstance->read();
    if(newPosition > currentPosition) {
-      // Check the input is not larger than 180 degrees
-      newPosition = (newPosition>180) ? 180 : newPosition;
       for(byte i=currentPosition; i<newPosition; i++) {
          servoInstance->write(i);
          delay(servoTransitionSpeed);
       }   
    } else if(newPosition < currentPosition) {
-      //byte is unsigned, no need to check for <0
       for(byte i=currentPosition; i>newPosition; i--) {
          servoInstance->write(i);
          delay(servoTransitionSpeed);
       }
    }
-   // Else, the current position and desired are the same
+   // Else, the current position and requested are the same
 }
 
 

@@ -74,9 +74,9 @@
 // Engine Speed
 #define Throttle          PotPin
 
-// Tunable constants for servo
-#define servoRightPosition     1600
-#define servoLeftPosition      2400
+// Tunable constants for servo, around 90 degrees total motion
+#define servoRightPosition     1050
+#define servoLeftPosition      1950
 #define servoTransitionSpeed   20
 
 
@@ -95,7 +95,7 @@ public:
    void rudderLeft();
    void rudderRight();
    void rudderCentre();
-   void rudderSetPosition(byte newPosition);
+   void rudderSetPosition(int newPosition);
 
 private:
    byte lgPos;
