@@ -58,3 +58,6 @@ local.properties
 ####################
 # Java build folder
 ArduinoApplet/build
+
+# Favicon not in repo for copyright reasons
+blockly/media/favicon/favicon.png

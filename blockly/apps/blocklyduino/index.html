@@ -246,12 +246,13 @@ function init(blockly) {
       box-shadow: 2px 2px 5px #888;
     }
   </style>
+  <link rel="icon" type="image/png" href="../../media/favicon/favicon.png">
 </head>
 <body>
   <table height="100%" width="100%">
     <tr>
       <td>
-        <h1><a href="https://github.com/gasolin/BlocklyDuino/wiki">BlocklyDuino</a> &gt; web-based visual programming editor for arduino</h1>
+        <h1><a href="https://github.com/carlospamg/BlocklyDuino-BtW">BlocklyDuino for Behind the Wire</a> &gt; Visual programming editor for arduino</h1>
       </td>
     </tr>
     <tr>
@@ -260,12 +261,6 @@ function init(blockly) {
           <tr id="tabRow" height="1em">
             <td id="tab_blocks" class="tabon" onclick="tabClick(this.id)">Blocks</td>
             <td class="tabmin">&nbsp;</td>
-            <!--td id="tab_javascript" class="taboff" onclick="tabClick(this.id)">JavaScript</td>
-            <td class="tabmin">&nbsp;</td-->
-            <!--td id="tab_dart" class="taboff" onclick="tabClick(this.id)">Dart</td>
-            <td class="tabmin">&nbsp;</td>
-            <td id="tab_python" class="taboff" onclick="tabClick(this.id)">Python</td>
-            <td class="tabmin">&nbsp;</td-->
             <td id="tab_arduino" class="taboff" onclick="tabClick(this.id)">Arduino</td>
             <td class="tabmin">&nbsp;</td>
             <td id="tab_xml" class="taboff" onclick="tabClick(this.id)">XML</td>
@@ -284,13 +279,9 @@ function init(blockly) {
     <tr>
       <td height="99%">
         <iframe id="content_blocks" src="frame.html"></iframe>
-		<!--div id="content_blocks" style="height:auto !important;height:400px; min-height:400px;"></div-->
-        <!--pre id="content_javascript"></pre>
-        <pre id="content_dart"></pre-->
         <div id="content_arduino">
           <textarea id="textarea_arduino" readonly></textarea>
         </div>
-        <!--pre id="content_python"></pre-->
         <div id="content_xml">
           <textarea id="textarea_xml" readonly></textarea>
         </div>
