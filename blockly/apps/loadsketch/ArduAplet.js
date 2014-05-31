@@ -5,10 +5,10 @@ function sendSketchToApplet() {
 }
 
 function getSketchToApplet() {
-   return document.getElementById("textarea_arduino").value;
+   return Blockly.Generator.workspaceToCode('Arduino');
 }
 
 function displaySketchInAlert() {
-   var mySketch = document.getElementById("textarea_arduino").value;
+   var mySketch = Blockly.Generator.workspaceToCode('Arduino');
 alert(mySketch);
 }
