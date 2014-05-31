@@ -7,3 +7,8 @@ function sendSketchToApplet() {
 function getSketchToApplet() {
    return document.getElementById("textarea_arduino").value;
 }
+
+function displaySketchInAlert() {
+   var mySketch = document.getElementById("textarea_arduino").value;
+alert(mySketch);
+}
