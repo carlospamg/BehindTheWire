@@ -4,14 +4,18 @@
 
    <title> Java Applet Test </title>
    <script>
+      function getSketchString() {
+         return document.getElementById("sketchTextArea").value;
+      }
+
+      function displaySketchInAlert() {
+         alert(getSketchString());
+      }
+
       function sendSketchToApplet() {
          var myApp = document.applets['ArduApplet'];
-         myApp.processSketch(document.getElementById("sketchTextArea").value);
+         myApp.processSketch(getSketchString());
          document.getElementById("sketchTextArea").value =  'TEST' + document.getElementById("sketchTextArea").value;
-      }
-      
-      function getSketchToApplet() {
-         return document.getElementById("sketchTextArea").value;
       }
    </script>
 

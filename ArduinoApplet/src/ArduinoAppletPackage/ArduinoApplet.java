@@ -3,6 +3,7 @@ package ArduinoAppletPackage;
 import java.awt.BorderLayout;
 import java.awt.Button;
 import java.awt.CardLayout;
+import java.awt.Checkbox;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.FileDialog;
@@ -11,6 +12,8 @@ import java.awt.Label;
 import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.io.IOException;
 
 import javax.swing.JApplet;
@@ -26,6 +29,7 @@ public class ArduinoApplet extends JApplet {
 	private JPanel cards;
 	private Button buttonLoad;
 	private Button buttonSettings;
+	private Checkbox onlyLaunchCheckBox;
 	private Settings settingsInstance;
 	private SketchCreator sketchProject;
 	private Label compilerLabel;
@@ -97,13 +101,17 @@ public class ArduinoApplet extends JApplet {
 
 		/* Components always visible */
 		JPanel permanentPanel= new JPanel( new FlowLayout(FlowLayout.RIGHT) );
+
+		onlyLaunchCheckBox = new Checkbox("Only Launch");
+		permanentPanel.add(onlyLaunchCheckBox);
+
 		buttonLoad = new Button("Load to Arduino");
 		permanentPanel.add(buttonLoad);
 		permanentPanel.setBackground(Color.WHITE);
 
 		buttonSettings = new Button("Settings");
 		permanentPanel.add(buttonSettings);
-
+		
 		/* Create the "cards", for now one has nothing */
 		JPanel appletCardNothing = new JPanel();
 		appletCardNothing.setBackground(Color.WHITE);
@@ -155,6 +163,18 @@ public class ArduinoApplet extends JApplet {
 			}
 		});
 
+		/* Only Launch action listener */
+		onlyLaunchCheckBox.addItemListener(new ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				if(e.getStateChange() == ItemEvent.DESELECTED) {
+					settingsInstance.setOnlyLaunchCompiler(false);
+				} else {
+					settingsInstance.setOnlyLaunchCompiler(true);
+				}
+			}
+		});
+
 		/* Select Compiler Action listener*/
 		compilerButton.addActionListener(new ActionListener() {
 			@Override
@@ -162,6 +182,7 @@ public class ArduinoApplet extends JApplet {
 				chooseCompiler();
 			}
 		});
+
 	}
 
 
@@ -171,7 +192,7 @@ public class ArduinoApplet extends JApplet {
 	 */
 	private String getSketch() {
 		JSObject win = JSObject.getWindow(this);
-		return (String)win.eval("getSketchToApplet();");
+		return (String)win.eval("getSketchString();");
 	}
 
 
@@ -194,6 +215,14 @@ public class ArduinoApplet extends JApplet {
 		}
 	}
 
+	
+	/**
+	 * Selects option to only launch arduino window
+	 */
+	private void onlyLaunchSet() {
+		
+		
+	}
 
 	/**
 	 *  Launches the command line to load the Arduino Sketch
@@ -203,18 +232,23 @@ public class ArduinoApplet extends JApplet {
 		StringBuilder arduinoCommands = new StringBuilder();
 		
 		/* First the command line text */
-		arduinoCommands.append("cmd start cmd.exe /K \"");
+		arduinoCommands.append("cmd start cmd.exe /c ");
 		
 		/* Now the arduino commands */
 		arduinoCommands.append(settingsInstance.getCompilerLocation());
-		arduinoCommands.append(" --upload ");
-		//TODO: maybe add arduino settings to settings class, change manually for now
-		arduinoCommands.append("--board arduino:avr:uno ");
-		arduinoCommands.append("--verbose \"");
+		arduinoCommands.append(" ");
+		if(!settingsInstance.getOnlyLaunchCompiler()) {
+			arduinoCommands.append("--upload ");
+			//TODO: maybe add arduino settings to settings class, change manually for now
+			arduinoCommands.append("--board arduino:avr:uno ");
+			//arduinoCommands.append("--verbose ");
+		}
+		arduinoCommands.append("\"");
 		arduinoCommands.append(Settings.getInstance().getSketchLocation());
-		
+		arduinoCommands.append("\"");
+
 		/* Finish with an exit to close the command prompt */
-		arduinoCommands.append("\" && exit\" ");
+		//arduinoCommands.append("\" && exit\" ");
 		try {
 			/* Launch command line and capture stream*/
 			Runtime.getRuntime().exec(arduinoCommands.toString());

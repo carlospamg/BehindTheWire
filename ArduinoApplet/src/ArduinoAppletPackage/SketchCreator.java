@@ -55,8 +55,9 @@ public class SketchCreator {
 
 		/* Prepare sketch project string */
 		StringBuilder sketchProject = new StringBuilder();
+		//sketchProject.append("C:\\");
 		sketchProject.append(sketchFileName);
-		sketchProject.append("/");
+		sketchProject.append("\\");
 		sketchProject.append(sketchFileName);
 		sketchProject.append(".ino");
 
@@ -82,7 +83,7 @@ public class SketchCreator {
 
 		/* Set the full sketch path into the Settings class */
 		Settings.getInstance().setSketchLocation(location);
-		//System.out.println("s: " + location);
+		System.out.println("s: " + location);
 	}
 
 

@@ -16,6 +16,7 @@ public class Settings extends Applet {
 	private static Settings singleton = null;
 	private static String compilerLocation = null;
 	private static String sketchLocation = null;
+	private static Boolean onlyLaunchCompiler = false;
 	private static String compilerDefaultLocation = "C:\\IDEs\\arduino-1.5.6-r2\\arduino.exe";
 	private static String sketchName = "BlocklyDuinoSketch";
 
@@ -56,6 +57,30 @@ public class Settings extends Applet {
 	 */
 	public String getSketchName() {
 		return Settings.sketchName;
+	} 
+
+
+	/**
+	 * Getter for onlyLaunchCompiler
+	 */
+	public boolean getOnlyLaunchCompiler() {
+		return onlyLaunchCompiler;
+	} 
+
+
+	/**
+	 * Setter for onlyLaunchCompiler
+	 */
+	public void setOnlyLaunchCompiler(Boolean newState) {
+		onlyLaunchCompiler = newState;
+	}
+
+
+	/**
+	 * Toggle for onlyLaunchCompiler
+	 */
+	public void toggleOnlyLaunchCompiler() {
+		onlyLaunchCompiler = !onlyLaunchCompiler;
 	} 
 
 
