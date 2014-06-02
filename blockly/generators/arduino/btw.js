@@ -244,3 +244,28 @@ Blockly.Arduino.throttle = function() {
   var code = 'map(analogRead(Throttle),0,1024,0,255)';
   return [code, Blockly.Arduino.ORDER_ATOMIC];
 };
+
+/////////////////////////////
+//           WAIT          //
+/////////////////////////////
+Blockly.Language.wait = {
+	category : 'Wait',
+	helpUrl: '',
+	init: function() {
+		this.setColour(230);
+		this.appendValueInput("WAIT_AMOUNT",Number)
+			.appendTitle("Wait ")
+			.appendTitle(new Blockly.FieldDropdown([["0.5",500],["1",1000],["1.5",1500],["2",2000]]),"WAIT")
+			.appendTitle(" seconds");
+		this.setInputsInline(true);
+		this.setPreviousStatement(true);
+		this.setNextStatement(true);
+	}
+}
+
+Blockly.Arduino.wait = function(){
+	var dropdown_wait = this.getTitleVale("WAIT");
+	var code = "delay("+dropdown_wait+");";
+	return [code, Blockly.Arduino.ORDER_ATOMIC];
+}
+}
