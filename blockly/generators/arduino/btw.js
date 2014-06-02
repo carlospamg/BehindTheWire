@@ -253,7 +253,7 @@ Blockly.Language.wait = {
 	helpUrl: '',
 	init: function() {
 		this.setColour(230);
-		this.appendValueInput("WAIT_AMOUNT",Number)
+		this.appenddummyInput("")
 			.appendTitle("Wait ")
 			.appendTitle(new Blockly.FieldDropdown([["0.5",500],["1",1000],["1.5",1500],["2",2000]]),"WAIT")
 			.appendTitle(" seconds");
