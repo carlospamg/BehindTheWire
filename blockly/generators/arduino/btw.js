@@ -263,8 +263,8 @@ Blockly.Language.wait = {
 }
 
 Blockly.Arduino.wait = function(){
-	var dropdown_wait = this.getTitleVale("WAIT");
-	var code = "delay("+dropdown_wait+");";
-	return [code, Blockly.Arduino.ORDER_ATOMIC];
+	var dropdown_wait = this.getTitleValue("WAIT");
+	var code = "delay("+dropdown_wait+");\n";
+	return code;
 }
 
