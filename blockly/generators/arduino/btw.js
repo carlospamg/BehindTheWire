@@ -72,6 +72,7 @@ Blockly.Language.rudder_left = {
 //Define Rudder Left code
 Blockly.Arduino.rudder_left = function() {
 	Blockly.Arduino.definitions_['define_servo'] = '#include <Servo.h>\n';
+	Blockly.Arduino.definitions_['define_btw_global'] = 'BehindTheWire functions;\n';
 	Blockly.Arduino.setups_['prepare_servo_r'] = 'functions.rudderPrepare();\n';
 	var code = 'functions.rudderLeft();\n';
 	return code;
@@ -93,6 +94,7 @@ Blockly.Language.rudder_right = {
 //Define Rudder Right code
 Blockly.Arduino.rudder_right = function() {
 	Blockly.Arduino.definitions_['define_servo'] = '#include <Servo.h>\n';
+	Blockly.Arduino.definitions_['define_btw_global'] = 'BehindTheWire functions;\n';
 	Blockly.Arduino.setups_['prepare_servo_r'] = 'functions.rudderPrepare();\n';
 	var code = 'functions.rudderRight();\n';
 	return code;
@@ -118,6 +120,7 @@ Blockly.Language.rudder_set_position = {
 Blockly.Arduino.rudder_set_position = function() {
 	var servo_position = this.getTitleValue('ANGLE');
 	Blockly.Arduino.definitions_['define_servo'] = '#include <Servo.h>\n';
+	Blockly.Arduino.definitions_['define_btw_global'] = 'BehindTheWire functions;\n';
 	Blockly.Arduino.setups_['prepare_servo_r'] = 'functions.rudderPrepare();\n';
 	//var servo_position =
 	//	Blockly.Arduino.valueToCode(this, 'RUDDER_POSITION', Blockly.Arduino.ORDER_ATOMIC) ||

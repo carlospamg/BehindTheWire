@@ -85,7 +85,7 @@ var profile = {
     analog : [["EngineLeft","EngineLeft"],["EngineRight","EngineRight"],["Throttle","Throttle"]],
     nav_lights : [["Red (Left Wing)","RedLight"],["Green (Right Wing)","GreenLight"],["White (Tail)","WhiteLight"]],
     buttons : [["Left","LeftButton"],["Right","RightButton"]],
-    rudder_angle: [["0","0"],["30","30"],["60","60"],["90","90"],["120","120"],["150","150"],["180","180"]],
+    rudder_angle: [["-45","-45"],["-30","-30"],["-15","-15"],["0","0"],["15","15"],["30","30"],["45","45"]],
     engines : [["Engine Left","EngineLeft"],["Engine Right","EngineRight"]],
   }
 }
