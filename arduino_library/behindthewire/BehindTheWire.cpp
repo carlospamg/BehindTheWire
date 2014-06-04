@@ -42,8 +42,8 @@ void BehindTheWire::rudderLeft() {
    }
 
    byte currentPosition = servoInstance->read();
-   if(currentPosition > 0) {
-      for(byte i=currentPosition; i>0; i--) {
+   if(currentPosition < 180) {
+      for(byte i=currentPosition; i<180; i++) {
          servoInstance->write(i);
          delay(servoTransitionSpeed);
       }
@@ -71,8 +71,8 @@ void BehindTheWire::rudderRight() {
    }
 
    byte currentPosition = servoInstance->read();
-   if(currentPosition < 180) {
-      for(byte i=currentPosition; i<180; i++) {
+   if(currentPosition > 0) {
+      for(byte i=currentPosition; i>0; i--) {
          servoInstance->write(i);
          delay(servoTransitionSpeed);
       }
