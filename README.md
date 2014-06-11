@@ -1,57 +1,56 @@
-### Welcome to BlocklyDuino.
-BlocklyDuino is a web-based visual programming editor for [Arduino](http://www.arduino.cc/).
+## BlocklyDuino for Behind the Wire
+"BlocklyDuino for Behind the Wire" is a fork of [BlocklyDuino](https://github.com/gasolin/BlocklyDuino/), a web-based visual programming editor for [Arduino](http://www.arduino.cc/) that has been updated to work with the [Behind the Wire](https://github.com/carlospamg/BehindTheWire) activity.
 
-BlocklyDuino is based on [Blockly](http://code.google.com/p/blockly/), the web-based, graphical programming editor. Provide static type language blocks and code generators for arduino programming.
+BlocklyDuino is based on [Blockly](http://code.google.com/p/blockly/), the web-based, graphical programming editor, to provide static type language blocks and code generators for arduino programming.
 
-BlocklyDuino also support [Grove](http://www.seeedstudio.com/wiki/GROVE_System) blocks to easily get started with microcontroller-based experimentation and learning.
-
-[We also have Google+ Page](https://plus.google.com/111979846292233941175).
+"BlocklyDuino for Behind the Wire" has been designed to be used on a pc running a Python localhost HTTP server. This allows the python program to be able to compile and load the Arduino code using the [Arduino IDE](http://arduino.cc/en/main/software).
 
 ### Features
 
-* Programming Arduino with visually drag and drop code blocks
+* Program an Arduino with visually drag and drop code blocks
+* Custom blocks for programming the [Behind the Wire](https://github.com/gasolin/BlocklyDuino/) kit
 * Generate fully compatible arduino source code
-* Interacive Arduino board with 10+ predefined Grove sensor blocks
+* Load the code directly to an Arduino Board
 * Load different on-site examples with url parameters
 
 ### Demo
 
-BlocklyDuino is a web tool. You can give it a try at
-[Web](http://www.gasolin.idv.tw/public/blockly/demos/blocklyduino/index.html) to see the working BlocklyDuino.
+"BlocklyDuino for Behind the Wire" needs to be executed from a personal computer with Python and the Arduino IDE, however the original BlocklyDuino is a web tool which can be tested at
+[Web](http://www.gasolin.idv.tw/public/blockly/demos/blocklyduino/index.html).
 
-You can link directly to examples
+Direct links to BlocklyDuino examples and a demo video
 * [demo 1](http://www.gasolin.idv.tw/public/blockly/demos/blocklyduino/index.html?url=/public/blockly/demos/blocklyduino/examples/blink.xml)
 * [demo 2](http://www.gasolin.idv.tw/public/blockly/demos/blocklyduino/index.html?url=/public/blockly/demos/blocklyduino/examples/servo_potentio.xml)
+* [video demo](http://www.youtube.com/watch?v=_swiyXcUvNY)
 
-Or watch the [video demo](http://www.youtube.com/watch?v=_swiyXcUvNY)
-
-### Run locally on your web browser
+### Running BlocklyDuino for Behind the Wire
 
 If you want to install it locally. Get code from github and open blockly/demos/blocklyduino/index.html in your browser.
 
 The preffered way is to put the BlocklyDuino/web folder into a web server and open the url like localhost/public/blockly/demos/blocklyduino/index.html for use.
 
-### Usage (3 Step)
+#### Required Software
+* [Python 2.7.x](https://www.python.org/download) 
+* [Arduino IDE version 1.5 or higher](http://arduino.cc/en/main/software)
 
-1. Open browser to BlocklyDuino, Drag and Drop blocks to make arduino program. 
-2. Select 'Arduino' tab to copy source code to Arduino IDE
-3. press 'upload' button to burn the code into arduino
+#### Usage 
+
+1. Doubleclick on XXXX, a browser window with BlocklyDuino for Behind the Wire will be launched.
+2. Create an Arduino Program
+3. Click on the "Settings" button and select the Arduino IDE directory, Arduino Board to target and COM port.
+4. Click on the "Run Program" button
 
 ### ChangeLog
 
-Check changelog [here](https://github.com/gasolin/BlocklyDuino/blob/master/CHANGELOG.txt)
+Check changelog [here](https://github.com/gasolin/BlocklyDuino/blob/master/CHANGELOG.txt).
 
-### Authors and Contributors
-Fred Lin (@gasolin) .
+This repository has been forked from [BlocklyDuino](https://github.com/gasolin/BlocklyDuino/) at the following commit :  [BlocklyDuino](https://github.com/gasolin/BlocklyDuino/commit/c1af9d8cfd46f9a9335989d529d20ba6a1d71228) == [BlocklyDuino-BtW](https://github.com/carlospamg/BlocklyDuino-BtW/commit/c1af9d8cfd46f9a9335989d529d20ba6a1d71228)
 
-Thanks Neil Fraser, Q.Neutron from Blockly http://code.google.com/p/blockly/
-Thanks Arduino and Seeeduino guys for Arduino and Grove blocks.
+### Attributions, Original Authors and Contributors
 
-The project is also inspired by arduiblock https://github.com/taweili/ardublock and modkit http://www.modk.it/
+Please refere to the [attributions](https://github.com/carlospamg/BlocklyDuino-BtW/blob/master/ATTRIBUTIONS.txt) file
 
 ### License
-
-Copyright (C) 2012 Fred Lin gasolin+blockly@gmail.com
 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
