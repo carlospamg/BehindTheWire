@@ -159,45 +159,43 @@ Blockly.Arduino.navigation_lights = function() {
 //         Buttons         //
 /////////////////////////////
 Blockly.Language.read_button = {
-	category: 'Read Buttons',
+	category: 'Buttons',
 	helpUrl: '',
 	init: function() {
 		this.setColour(230);
 		this.appendDummyInput("")
-			.appendTitle("Check ")
 			.appendTitle(new Blockly.FieldDropdown(profile.arduino_btw.buttons), "Button")
-			.appendTitle(" Button");
+			.appendTitle(" button is ON?");
 		this.setOutput(true, Boolean);
 		this.setTooltip('');
 	}
 };
 
 Blockly.Arduino.read_button = function() {
-  var dropdown_button = this.getTitleValue('Button');
-  Blockly.Arduino.setups_['setup_input_'+dropdown_button] = 'pinMode('+dropdown_button+', INPUT);';
-  var code = 'digitalRead('+dropdown_button+')';
-  return [code, Blockly.Arduino.ORDER_ATOMIC];
+	var dropdown_button = this.getTitleValue('Button');
+	Blockly.Arduino.setups_['setup_input_'+dropdown_button] = 'pinMode('+dropdown_button+', INPUT);';
+	var code = 'digitalRead('+dropdown_button+')';
+	return [code, Blockly.Arduino.ORDER_ATOMIC];
 };
 
 Blockly.Language.pot = {
-  category: 'Read Buttons',
-  helpUrl: '',
-  init: function() {
-    this.setColour(230);
-    this.appendDummyInput("")
-        .appendTitle("Read POT")
-        //.appendTitle(new Blockly.FieldDropdown(profile.default.analog), "THROTTLE");
-    this.setOutput(true, Number);
-    this.setTooltip('Return value between 0 and 1024');
-  }
+	category: 'Buttons',
+	helpUrl: '',
+	init: function() {
+		this.setColour(230);
+		this.appendDummyInput("")
+			.appendTitle("Read Knob")
+		this.setOutput(true, Number);
+		this.setTooltip('Return value between 0 and 1024');
+	}
 };
 
 Blockly.Arduino.pot = function() {
-  //var dropdown_analogue = this.getTitleValue('THROTTLE');
-  //Blockly.Arduino.setups_['setup_input_'+dropdown_analogue] = 'pinMode('+dropdown_analogue+', INPUT);';
-  //var code = 'analogRead('+dropdown_analogue+')';
-  var code = 'analogRead(Throttle)';
-  return [code, Blockly.Arduino.ORDER_ATOMIC];
+	//var dropdown_analogue = this.getTitleValue('THROTTLE');
+	//Blockly.Arduino.setups_['setup_input_'+dropdown_analogue] = 'pinMode('+dropdown_analogue+', INPUT);';
+	//var code = 'analogRead('+dropdown_analogue+')';
+	var code = 'analogRead(Throttle)';
+	return [code, Blockly.Arduino.ORDER_ATOMIC];
 };
 
 /////////////////////////////
@@ -211,7 +209,7 @@ Blockly.Language.set_engine_speed = {
 		this.appendValueInput("ENGINE_SPEED", Number)
 			.appendTitle("Set  ")
 			.appendTitle(new Blockly.FieldDropdown(profile.arduino_btw.engines), "ENGINE")
-			.appendTitle("speed to ")
+			.appendTitle("speed to")
 			.setCheck(Number);
 		this.setInputsInline(true);
 		this.setPreviousStatement(true);
@@ -220,32 +218,28 @@ Blockly.Language.set_engine_speed = {
 };
 
 Blockly.Arduino.set_engine_speed = function() {
-  var dropdown_engine = this.getTitleValue('ENGINE');
-  var engine_speed = Blockly.Arduino.valueToCode(this, 'ENGINE_SPEED', Blockly.Arduino.ORDER_ATOMIC) || '90';
-  Blockly.Arduino.setups_['setup_output_'+dropdown_engine] = 'pinMode('+dropdown_engine+', OUTPUT);';
-  var code = 'analogWrite('+dropdown_engine+', '+engine_speed+');\n'
-  return code;
+	var dropdown_engine = this.getTitleValue('ENGINE');
+	var engine_speed = Blockly.Arduino.valueToCode(this, 'ENGINE_SPEED', Blockly.Arduino.ORDER_ATOMIC) || '90';
+	Blockly.Arduino.setups_['setup_output_'+dropdown_engine] = 'pinMode('+dropdown_engine+', OUTPUT);';
+	var code = 'analogWrite('+dropdown_engine+', '+engine_speed+');\n'
+	return code;
 }
 
 Blockly.Language.throttle = {
-  category: 'Engines',
-  helpUrl: '',
-  init: function() {
-    this.setColour(230);
-    this.appendDummyInput("")
-        .appendTitle("Read Throttle")
-        //.appendTitle(new Blockly.FieldDropdown(profile.default.analog), "THROTTLE");
-    this.setOutput(true, Number);
-    this.setTooltip('Return value between 0 and 1024');
-  }
+	category: 'Engines',
+	helpUrl: '',
+	init: function() {
+		this.setColour(230);
+		this.appendDummyInput("")
+			.appendTitle("Throttle Value")
+		this.setOutput(true, Number);
+		this.setTooltip('Return value between 0 and 1024');
+	}
 };
 
 Blockly.Arduino.throttle = function() {
-  //var dropdown_analogue = this.getTitleValue('THROTTLE');
-  //Blockly.Arduino.setups_['setup_input_'+dropdown_analogue] = 'pinMode('+dropdown_analogue+', INPUT);';
-  //var code = 'analogRead('+dropdown_analogue+')';
-  var code = 'map(analogRead(Throttle),0,1024,0,255)';
-  return [code, Blockly.Arduino.ORDER_ATOMIC];
+	var code = 'map(analogRead(Throttle),0,1024,0,255)';
+	return [code, Blockly.Arduino.ORDER_ATOMIC];
 };
 
 /////////////////////////////
@@ -255,10 +249,10 @@ Blockly.Language.wait = {
 	category : 'Wait',
 	helpUrl: '',
 	init: function() {
-		this.setColour(230);
+		this.setColour(120);
 		this.appendDummyInput("")
 			.appendTitle("Wait ")
-			.appendTitle(new Blockly.FieldDropdown([["0.5","500"],["1","1000"],["1.5","1500"],["2","2000"]]),"WAIT")
+			.appendTitle(new Blockly.FieldDropdown([["0.1","100"],["0.5","500"],["1","1000"],["1.5","1500"],["2","2000"],["5","5000"],["10","10000"]]),"WAIT")
 			.appendTitle(" seconds");
 		this.setPreviousStatement(true);
 		this.setNextStatement(true);
@@ -270,4 +264,3 @@ Blockly.Arduino.wait = function(){
 	var code = "delay("+dropdown_wait+");\n";
 	return code;
 }
-
