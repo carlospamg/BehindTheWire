@@ -5,7 +5,9 @@ import os
 PORT = 8000
 
 class BlockyHTTPServer(SimpleHTTPServer.SimpleHTTPRequestHandler):
-    """Simple Python server to pass over the AJAX requests"""
+    """Simple Python server to pass over the AJAX requests
+       This class will only deal with receiving and decoding messages,
+       and a different handler will deal with the requests """
         
     def do_POST(self):
         """Handle a post request by returning the text with an added string"""
@@ -22,10 +24,6 @@ class BlockyHTTPServer(SimpleHTTPServer.SimpleHTTPRequestHandler):
         command_line_command = '"C:\\IDE\\arduino-1.5.6-r2\\arduino.exe"'
         print('Command line command:\n\t' + command_line_command)
         os.system(command_line_command)
-
-        
-class BlocklyRequestHandler():
-    """Request Handler from the BlockyDuino app"""
 
 
 def start_server(DocumentRoot):

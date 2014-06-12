@@ -5,7 +5,8 @@
   <script type="text/javascript" src="Blob.js"></script>
   <script type="text/javascript" src="FileSaver.min.js"></script>
   <script type="text/javascript" src="blockly_helper.js"></script>
-  <script type="text/javascript" src="../loadsketch/ArduAplet.js"></script>
+  <script type="text/javascript" src="../loadsketch/ArduApplet.js"></script>
+  <script type="text/javascript" src="../loadsketch/ArduServerCompiler.js"></script>
   <script>
 /**
  * List of tab names.
@@ -235,12 +236,13 @@ function init(blockly) {
             <td class="tabmin">&nbsp;</td>
             <td id="tab_xml" class="taboff" onclick="tabClick(this.id)">XML</td>
             <td class="tabmax">
-              <applet code=ArduinoAppletPackage.ArduinoApplet.class archive="../loadsketch/ArduinoApplet.jar" name="ArduApplet" id ="ArduApplet" width="500" height="75"> </applet>
+              <!--applet code=ArduinoAppletPackage.ArduinoApplet.class archive="../loadsketch/ArduinoApplet.jar" name="ArduApplet" id ="ArduApplet" width="500" height="75"> </applet-->
               <button onclick="discard()">Discard</button>
               <button onclick="save()">Save XML</button>
               <button id="fakeload">Load XML</button>
               <input type="file" id="load" style="display: none;"/>
-              <!--button class="launch" onclick="pythonTest()">Run Program</button-->
+              <button onclick="open_settings()">Settings</button>
+              <button class="launch" onclick="send_sketch_to_server()">Run Program</button>
             </td>
           </tr>
         </table>
