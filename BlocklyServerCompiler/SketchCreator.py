@@ -1,7 +1,6 @@
 import os
 
-
-class SketchCreator():
+class SketchCreator(object):
     """ Creates an Arduino Sketch """
     
     _sketch_filename = 'BlocklyDuinoSketch'
@@ -19,20 +18,24 @@ void loop() {
   delay(1000);
 }"""
 
-    def create_sketch(self):
+    def create_sketch(self, sketch_code=None):
+        """ creates the ardunino sketch with either the default blinky """
+        """ code or the code defined in the input parameter            """
         arduino_sketch = open(self._sketch_dir, "w")
-        arduino_sketch.write(self._sketch_default_code)
-    
-    #Need to figure out function polymorphism
-    #def create_sketch(self, sketch_code):
-    #    arduino_sketch = open(_sketch_dir, "w")
-    #    arduino_sketch.write(sketch_code)
+        if isinstance(sketch_code, str) and sketch_code:
+            arduino_sketch.write(sketch_code)
+        else:
+            arduino_sketch.write(self._sketch_default_code)
     
     def set_filename(self, newfilename):
         _sketch_filename = newfilename
         _sketch_dir = newfilename + '.ino'
 
 
-if __name__ == "__main__":
+def main():
     something = SketchCreator()
     something.create_sketch()
+
+
+if __name__ == "__main__":
+    main()

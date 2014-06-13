@@ -1,6 +1,7 @@
+import os
 import BaseHTTPServer
 import SimpleHTTPServer
-import os
+from BlocklyRequestHandler import BlocklyRequestHandler
 
 PORT = 8000
 
@@ -8,27 +9,26 @@ class BlockyHTTPServer(SimpleHTTPServer.SimpleHTTPRequestHandler):
     """Simple Python server to pass over the AJAX requests
        This class will only deal with receiving and decoding messages,
        and a different handler will deal with the requests """
-        
+    
     def do_POST(self):
         """Handle a post request by returning the text with an added string"""
+        
         length = int(self.headers.getheader('content-length'))
         data_string = self.rfile.read(length)
         try:
             result = '//Python test\n\r' + data_string
         except:
             result = 'error'
-        self.launch_command_line()
+        
+        test_instance = BlocklyRequestHandler()
+        test_instance.launch_command_line()
+        
         self.wfile.write(result)
-
-    def launch_command_line(self):
-        command_line_command = '"C:\\IDE\\arduino-1.5.6-r2\\arduino.exe"'
-        print('Command line command:\n\t' + command_line_command)
-        os.system(command_line_command)
 
 
 def start_server(DocumentRoot):
     """Start the server with the document root indicated by argument"""
-    print('Setting HTTP Server Document Root to: ' + DocumentRoot)
+    print('Setting HTTP Server Document Root to: \n\t' + DocumentRoot + "\n")
     os.chdir(DocumentRoot)
     server_address = ("", PORT)
     server = BaseHTTPServer.HTTPServer(server_address, BlockyHTTPServer)
