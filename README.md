@@ -7,15 +7,15 @@ BlocklyDuino is based on [Blockly](http://code.google.com/p/blockly/), the web-b
 
 ### Features
 
-* Program an Arduino with visually drag and drop code blocks
-* Custom blocks for programming the [Behind the Wire](https://github.com/gasolin/BlocklyDuino/) kit
+* Program an Arduino with visual drag-and-drop code blocks
+* Custom blocks for programming the [Behind the Wire](https://github.com/carlospamg/BehindTheWire) kit
 * Generate fully compatible arduino source code
-* Load the code directly to an Arduino Board
-* Load different on-site examples with url parameters
+* Load the code to an Arduino Board
+* Load different examples with url parameters
 
 ### Demo
 
-"BlocklyDuino for Behind the Wire" needs to be executed from a personal computer with Python and the Arduino IDE, however the original BlocklyDuino is a web tool which can be tested at
+"BlocklyDuino for Behind the Wire" needs to be executed from a pc with Python and the Arduino IDE, however the original BlocklyDuino is a web tool which can be tested at
 [Web](http://www.gasolin.idv.tw/public/blockly/demos/blocklyduino/index.html).
 
 Direct links to BlocklyDuino examples and a demo video
@@ -25,20 +25,18 @@ Direct links to BlocklyDuino examples and a demo video
 
 ### Running BlocklyDuino for Behind the Wire
 
-If you want to install it locally. Get code from github and open blockly/demos/blocklyduino/index.html in your browser.
-
-The preffered way is to put the BlocklyDuino/web folder into a web server and open the url like localhost/public/blockly/demos/blocklyduino/index.html for use.
+If you want to install BlocklyDuino for Behind the Wire locally, download the code from github and double click the "launch.py" file in the root directory.
 
 #### Required Software
-* [Python 2.7.x](https://www.python.org/download) 
+* [Python 2.7.x](https://www.python.org/download), probably to be ported to 3.x
 * [Arduino IDE version 1.5 or higher](http://arduino.cc/en/main/software)
 
 #### Usage 
 
-1. Doubleclick on XXXX, a browser window with BlocklyDuino for Behind the Wire will be launched.
-2. Create an Arduino Program
+1. Doubleclick on launch.py file, a browser window with BlocklyDuino for Behind the Wire will be launched.
+2. Create an Arduino Program.
 3. Click on the "Settings" button and select the Arduino IDE directory, Arduino Board to target and COM port.
-4. Click on the "Run Program" button
+4. Click on the red "Run Program" button
 
 ### ChangeLog
 
@@ -52,8 +50,14 @@ Please refere to the [attributions](https://github.com/carlospamg/BlocklyDuino-B
 
 ### License
 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
