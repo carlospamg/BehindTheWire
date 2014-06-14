@@ -252,7 +252,7 @@ Blockly.Language.wait = {
 		this.setColour(120);
 		this.appendDummyInput("")
 			.appendTitle("Wait ")
-			.appendTitle(new Blockly.FieldDropdown([["0.1","100"],["0.5","500"],["1","1000"],["1.5","1500"],["2","2000"],["5","5000"],["10","10000"]]),"WAIT")
+			.appendTitle(new Blockly.FieldDropdown([["1","1000"],["0.1","100"],["0.5","500"],["1.5","1500"],["2","2000"],["5","5000"],["10","10000"]]),"WAIT")
 			.appendTitle(" seconds");
 		this.setPreviousStatement(true);
 		this.setNextStatement(true);
