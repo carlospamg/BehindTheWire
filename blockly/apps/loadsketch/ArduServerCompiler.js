@@ -1,15 +1,6 @@
-function send_sketch_to_server() {
-   //alert(getSketchString());
-   xml_http_post("index.html", getSketchString(), server_callback)
-}
-
-
-function server_callback(req) {
-   alert(req.responseText);
-   //alert(getSketchString());
-}
-
-
+/////////////////////////////
+// Communicate with Server //
+/////////////////////////////
 function xml_http_post(url, data, callback) {
    var req = false;
    try {
@@ -41,17 +32,43 @@ function xml_http_post(url, data, callback) {
 }
 
 
+//////////////
+// Settings //
+//////////////
 function open_settings() {
    var settings_file_dir = "../loadsketch/ArduServerCompilerSettings.html";
-
    var settingsPopupWindow = window.open(
       settings_file_dir,
       'popUpWindow',
-      'height=150,width=500,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no,status=yes');
-
+      'height=150,width=400,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no,status=yes');
    if (settingsPopupWindow.focus) {
       settingsPopupWindow.focus()
    }
-
    return false;
+}
+
+
+function browse_compiler_location(fileInput) {
+   document.getElementById(fileInput).click();
+}
+
+
+function set_compiler_location(fileInput, textField) {
+   document.getElementById(textField).value = fileInput.value;
+   //TODO: Add AJAX code to set compiler location on server settings
+}
+
+
+//////////////////////////
+// Load and Run Program //
+//////////////////////////
+function send_sketch_to_server() {
+   //alert(getSketchString());
+   xml_http_post("index.html", getSketchString(), server_callback)
+}
+
+
+function server_callback(req) {
+   alert(req.responseText);
+   //alert(getSketchString());
 }

@@ -1,12 +1,40 @@
 <html>
 <meta http-equiv="Content-Type" content="text/html; charset=Cp1252"/>
 <head>
-   <title> BlocklyServerCompiler Settings </title>
+   <title>BlocklyServerCompiler Settings</title>
+   <link rel="stylesheet" type="text/css" href="../../media/webfrontend.css">
+   <script type="text/javascript" src="ArduServerCompiler.js"></script>
 </head>
 
 <body>
+   <div class="settings_div">
+      <input type="file" id="compiler_inputfile" onchange="set_compiler_location(this, 'compilerLocation');" style="display: none;" />
+      <button onclick="browse_compiler_location('compiler_inputfile')">Compiler:</button>
+      <input type="text" id="compilerLocation" readonly="readonly" style="width: 250px ;"/>
+   </div>
 
-   <p>This will be the settings window.</p>
+   <div class="settings_div">
+      Arduino Board:
+      <select name="cars">
+         <option value="uno">Arduino Uno</option>
+         <option value="leonardo">Arduino Leonardo</option>
+		 <option value="mega">Arduino Mega</option>
+         <option value="duemilanove">Arduino Duemilanove ATmega328p</option>
+         <option value="duemilanove168">Arduino Duemilanove ATmega168</option>
+      </select>
+   </div>
 
+   <div class="settings_div">
+      COM Port:
+      <select name="cars">
+         <option value="COM1">COM 1</option>
+         <option value="COM2">COM 2</option>
+         <option value="COM3">COM 3</option>
+      </select>
+   </div>
+
+   <div class="settings_div">
+      <input type="checkbox" name="onlyIde" value="loadOnlyIDE">Only Load IDE (no compile/upload)
+   </div>
 </body>
 </html>
