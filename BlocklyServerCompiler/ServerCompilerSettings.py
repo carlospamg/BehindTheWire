@@ -4,10 +4,10 @@ import ConfigParser
 class ServerCompilerSettings(object):
     """ Retrieves and saves the settings for this Server Compiler """
     _singleton_instance = None
-    _launch_IDE_only = False;
-    _compiler_dir = "C:\arduino-1.5.6-r2\arduino.exe";
-    _sketch_dir = "C:\BlocklyDuino-BtW\BlocklyDuinoSketch\BlocklyDuinoSketch.ino";
-    _sketch_name = "BlocklyDuinoSketch";
+    _launch_IDE_only = False
+    _compiler_dir = "C:\\IDEs\\arduino-1.5.6-r2\\arduino.exe"
+    _sketch_dir = "G:\\GE\\CSF\\git\\BlocklyDuino\\BlocklyDuinoSketch.ino"
+    _sketch_name = "BlocklyDuinoSketch"
     _settings_filename = "ServerCompilerSettings.ini"
     
     def __new__(cls, *args, **kwargs):

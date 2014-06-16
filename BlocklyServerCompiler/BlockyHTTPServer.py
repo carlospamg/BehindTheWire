@@ -1,7 +1,8 @@
 import os
 import BaseHTTPServer
 import SimpleHTTPServer
-from BlocklyRequestHandler import BlocklyRequestHandler
+import json
+import BlocklyRequestHandler
 
 PORT = 8000
 
@@ -20,8 +21,7 @@ class BlockyHTTPServer(SimpleHTTPServer.SimpleHTTPRequestHandler):
         except:
             result = 'error'
         
-        test_instance = BlocklyRequestHandler()
-        test_instance.launch_command_line()
+        BlocklyRequestHandler.launch_command_line()
         
         self.wfile.write(result)
 

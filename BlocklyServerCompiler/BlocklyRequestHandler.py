@@ -1,20 +1,24 @@
 import os
 import Tkinter, tkFileDialog
+from ServerCompilerSettings import ServerCompilerSettings
 
 
-class BlocklyRequestHandler(object):
-    """Request Handler from the BlocklyDuino app"""
-    
-    def launch_command_line(cls):
-        command_line_command = '"C:\\IDE\\arduino-1.5.6-r2\\arduino.exe"'
-        print('Command line command:\n\t' + command_line_command)
-        os.system(command_line_command)
+def launch_command_line():
+    # Concadenate the command string
+    command_line_command = ServerCompilerSettings().compiler_dir + ' ' + \
+        '--upload ' + \
+        '--board arduino:avr:uno ' + \
+        '"' + ServerCompilerSettings().sketch_dir + '"'
+    print('Command line command:\n\t' + command_line_command)
+    os.system(command_line_command)
 
-    def browse_compiler_executable(cls):
-        root = Tkinter.Tk()
-        root.withdraw()
-        file_path = tkFileDialog.askopenfilename()
-        print(file_path)
+
+def browse_compiler_executable():
+    root = Tkinter.Tk()
+    root.withdraw()
+    file_path = tkFileDialog.askopenfilename()
+    print(file_path)
+    return file_path
 
 
 def main():
