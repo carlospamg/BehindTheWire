@@ -1,5 +1,5 @@
 <html>
-<meta http-equiv="Content-Type" content="text/html; charset=Cp1252"/>
+<meta http-equiv="Content-Type" content="text/html; charset=Cp1252" />
 <head>
    <title>BlocklyServerCompiler Settings</title>
    <link rel="stylesheet" type="text/css" href="../../media/webfrontend.css">
@@ -8,8 +8,9 @@
 
 <body>
    <div class="settings_div">
-      <input type="file" id="compiler_inputfile" onchange="set_compiler_location(this, 'compilerLocation');" style="display: none;" />
-      <button onclick="browse_compiler_location('compiler_inputfile')">Compiler:</button>
+      <!--input type="file" id="compiler_inputfile" onchange="set_compiler_location_js(this, 'compilerLocation');" /-->
+      <!--button onclick="click_element('compiler_inputfile')">Compiler:</button-->
+      <button onclick="set_compiler_location_py('compilerLocation')">Compiler:</button>
       <input type="text" id="compilerLocation" readonly="readonly" style="width: 250px ;"/>
    </div>
 
@@ -18,7 +19,7 @@
       <select name="cars">
          <option value="uno">Arduino Uno</option>
          <option value="leonardo">Arduino Leonardo</option>
-		 <option value="mega">Arduino Mega</option>
+         <option value="mega">Arduino Mega</option>
          <option value="duemilanove">Arduino Duemilanove ATmega328p</option>
          <option value="duemilanove168">Arduino Duemilanove ATmega168</option>
       </select>
@@ -34,7 +35,7 @@
    </div>
 
    <div class="settings_div">
-      <input type="checkbox" name="onlyIde" value="loadOnlyIDE">Only Load IDE (no compile/upload)
+      <input type="checkbox" name="onlyIde" value="loadOnlyIDE" />Only Load IDE (no compile/upload)
    </div>
 </body>
 </html>

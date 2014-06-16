@@ -48,13 +48,19 @@ function open_settings() {
 }
 
 
-function browse_compiler_location(fileInput) {
-   document.getElementById(fileInput).click();
+function click_element(elementToClick) {
+   document.getElementById(elementToClick).click();
 }
 
 
-function set_compiler_location(fileInput, textField) {
+function set_compiler_location_js(fileInput, textField) {
    document.getElementById(textField).value = fileInput.value;
+   //TODO: Add AJAX code to set compiler location on server settings
+}
+
+
+function set_compiler_location_py(textField) {
+   document.getElementById(textField).value = "just a test";
    //TODO: Add AJAX code to set compiler location on server settings
 }
 

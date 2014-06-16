@@ -25,15 +25,13 @@ def open_browser():
 
 def main(): 
     print("Running Python version " + platform.python_version() + "\n")
+    BlocklyServerCompiler.BlocklyRequestHandler().browse_compiler_executable()
     open_browser()
     test_instance = BlocklyServerCompiler.SketchCreator()
     test_instance.create_sketch()
-    test_instance = BlocklyServerCompiler.ServerCompilerSettings()
-    print("Default sketch name: " + test_instance.sketch_name)
-    test_instance.sketch_name = "new name"
-    print("New test name: " + test_instance.sketch_name)
-    print("Private name: " + test_instance._sketch_name + "\n")
+    print(list(BlocklyServerCompiler.serial_ports()))
     BlocklyServerCompiler.start_server(os.getcwd())
+    
 
 
 if __name__ == "__main__":
