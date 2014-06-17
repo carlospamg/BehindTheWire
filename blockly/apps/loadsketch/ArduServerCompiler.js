@@ -68,9 +68,14 @@ function set_compiler_location_py(textField) {
 //////////////////////////
 // Load and Run Program //
 //////////////////////////
+function getSketchCode() {
+   return Blockly.Generator.workspaceToCode('Arduino');
+}
+
+
 function send_sketch_to_server() {
    //alert(getSketchString());
-   xml_http_post("index.html", getSketchString(), server_callback)
+   xml_http_post("index.html", getSketchCode(), server_callback)
 }
 
 
