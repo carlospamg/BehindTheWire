@@ -48,5 +48,10 @@ Desktop.ini
 $RECYCLE.BIN/
 
 
+# SketchUp #
+############
+*.skb
+
+
 # others #
 ##########
