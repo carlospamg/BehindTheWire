@@ -43,12 +43,17 @@
         }
       }
 
+      // Deselect the checkbox
+      var peak_code_checkbox = document.getElementById('peakArduinoCheck');
+      peak_code_checkbox.checked = false;
+      peakArduinoCode();
+      
       // Deselect all tabs and hide all panes.
       for (var x in TABS_) {
         document.getElementById('tab_' + TABS_[x]).className = 'taboff';
         document.getElementById('content_' + TABS_[x]).style.display = 'none';
       }
-
+      
       // Select the active tab.
       selected = id.replace('tab_', '');
       document.getElementById(id).className = 'tabon';
@@ -75,11 +80,18 @@
         xmlTextarea.value = xmlText;
         xmlTextarea.focus();
       } else if (content.id == 'content_arduino') {
-        //content.innerHTML = Blockly.Generator.workspaceToCode('Arduino');
         var arduinoTextarea = document.getElementById('textarea_arduino');
         arduinoTextarea.value = Blockly.Generator.workspaceToCode('Arduino');
         arduinoTextarea.focus();
       }
+    }
+    
+    /**
+     * Updates the arduino code in the text area based on the blocks
+     */
+    function renderArduinoCode() {
+      var arduinoTextarea = document.getElementById('textarea_arduino');
+      arduinoTextarea.value = Blockly.Generator.workspaceToCode('Arduino');
     }
 
     /**
@@ -114,6 +126,54 @@
         load_by_url(dest);
       }
     }
+
+    /**
+     * Configure the Block panel to display the code on the right based on the state
+     * of the checkbox "peakArduinoCheck"
+     */
+    function peakArduinoCode() {
+      var ardu_div = document.getElementById('content_arduino');
+      var block_div = document.getElementById('content_blocks');
+      var peak_code_checkbox = document.getElementById('peakArduinoCheck');
+      var blocks_iframe = document.getElementById('iframe_blocks');
+      
+      if(peak_code_checkbox.checked) {
+        // Deselect all tabs and panels
+        for (var x in TABS_) {
+          document.getElementById('tab_' + TABS_[x]).className = 'taboff';
+          document.getElementById('content_' + TABS_[x]).style.display = 'none';
+        }
+
+        // Set Blocks tab
+        //selected = 'blocks';
+        document.getElementById('tab_blocks').className = 'tabon';
+
+        // Rearrange panels for blocks and arduino code
+        ardu_div.style.display = 'inline-block';
+        ardu_div.className = 'content_arduino_peak';
+        block_div.style.display = 'inline-block';
+        block_div.className = 'content_block_peak';
+
+        // Regenerate arduino code and ensure every click does as well
+        renderArduinoCode();
+        blocks_iframe.contentDocument.addEventListener('click', renderArduinoCode, false)
+      } else {
+        // Restore to original state
+        block_div.className = 'content_block';
+        ardu_div.className = 'content_arduino';
+        blocks_iframe.contentDocument.removeEventListener('click', renderArduinoCode, false)
+
+        // Deselect all tabs and panels
+        for (var x in TABS_) {
+          document.getElementById('tab_' + TABS_[x]).className = 'taboff';
+          document.getElementById('content_' + TABS_[x]).style.display = 'none';
+        }
+
+        // Select original block tab and panel
+        document.getElementById('tab_' + selected).className = 'tabon';
+        document.getElementById('content_' + selected).style.display = 'block';
+      }
+    }
   </script>
 </head>
 <body>
@@ -134,6 +194,8 @@
             <td id="tab_xml" class="taboff" onclick="tabClick(this.id)">XML</td>
             <td class="tabmax">
               <!--applet code=ArduinoAppletPackage.ArduinoApplet.class archive="../loadsketch/ArduinoApplet.jar" name="ArduApplet" id ="ArduApplet" width="500" height="75"> </applet-->
+              Blocks+Code<input type="checkbox" name="peakCode" id="peakArduinoCheck" value="peakArduinoCode" onclick="peakArduinoCode()"/>
+              <button onclick="renderArduinoCode()">Render</button>
               <button onclick="discard()">Discard</button>
               <button onclick="save()">Save XML</button>
               <button id="fakeload">Load XML</button>
@@ -147,9 +209,11 @@
     </tr>
     <tr>
       <td height="99%">
-        <iframe id="content_blocks" src="frame.html"></iframe>
+        <div id="content_blocks" onclick="renderArduinoCode()" >
+          <iframe id="iframe_blocks" src="frame.html"></iframe>
+        </div>
         <div id="content_arduino">
-          <textarea id="textarea_arduino" readonly></textarea>
+          <textarea id="textarea_arduino" wrap="off" readonly></textarea>
         </div>
         <div id="content_xml">
           <textarea id="textarea_xml" readonly></textarea>
