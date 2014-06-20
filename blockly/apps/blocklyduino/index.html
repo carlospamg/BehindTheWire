@@ -43,17 +43,19 @@
         }
       }
 
-      // Deselect the checkbox
-      var peak_code_checkbox = document.getElementById('peakArduinoCheck');
+      // Deselect the checkbox, hide and revert peak changes
+      var peak_code_checkbox = document.getElementById('peakCodeCheck');
+      var peak_code_span = document.getElementById('peakCode');
       peak_code_checkbox.checked = false;
-      attachArduinoCode();
-      
+      peakArduinoCode();
+      peak_code_span.style.display = 'none';
+
       // Deselect all tabs and hide all panes.
       for (var x in TABS_) {
         document.getElementById('tab_' + TABS_[x]).className = 'taboff';
         document.getElementById('content_' + TABS_[x]).style.display = 'none';
       }
-      
+
       // Select the active tab.
       selected = id.replace('tab_', '');
       document.getElementById(id).className = 'tabon';
@@ -61,6 +63,11 @@
       var content = document.getElementById('content_' + selected);
       content.style.display = 'block';
       renderContent();
+      
+      //if block planel display, show peak code checkbox
+      if(selected == 'blocks') {
+        peak_code_span.style.display = 'inline';
+      }
     }
 
     /**
@@ -141,12 +148,12 @@
 
     /**
      * Configure the Block panel to display the code on the right based on the state
-     * of the checkbox "peakArduinoCheck"
+     * of the checkbox "peakCodeCheck"
      */
-    function attachArduinoCode() {
+    function peakArduinoCode() {
       var ardu_div = document.getElementById('content_arduino');
       var block_div = document.getElementById('content_blocks');
-      var peak_code_checkbox = document.getElementById('peakArduinoCheck');
+      var peak_code_checkbox = document.getElementById('peakCodeCheck');
       var blocks_iframe = document.getElementById('iframe_blocks');
       
       if(peak_code_checkbox.checked) {
@@ -220,7 +227,7 @@
             <td id="tab_xml" class="taboff" onclick="tabClick(this.id)">XML</td>
             <td class="tabmax">
               <!--applet code=ArduinoAppletPackage.ArduinoApplet.class archive="../loadsketch/ArduinoApplet.jar" name="ArduApplet" id ="ArduApplet" width="500" height="75"> </applet-->
-              Blocks+Code<input type="checkbox" name="peakCode" id="peakArduinoCheck" value="peakArduinoCode" onclick="attachArduinoCode()"/>
+              <span id="peakCode" style="display:none;">Peak at Code<input type="checkbox" id="peakCodeCheck" onclick="peakArduinoCode()"/></span>
               <button onclick="renderArduinoCode(null)">Render</button>
               <button onclick="discard()">Discard</button>
               <button onclick="save()">Save XML</button>
@@ -235,7 +242,7 @@
     </tr>
     <tr>
       <td height="99%">
-        <div id="content_blocks" onclick="attachArduinoCode()">
+        <div id="content_blocks">
           <iframe id="iframe_blocks" src="frame.html"></iframe>
         </div>
         <div id="content_arduino">
