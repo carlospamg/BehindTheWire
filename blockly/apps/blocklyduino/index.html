@@ -2,8 +2,10 @@
 <head>
   <meta charset="utf-8">
   <title>BlocklyDuino for Behind the Wire</title>
-  <link rel="stylesheet" type="text/css" href="../../media/webfrontend.css">
   <link rel="icon" type="image/png" href="../../media/favicon/favicon.png">
+  <link rel="stylesheet" type="text/css" href="../../media/webfrontend.css">
+  <link rel="stylesheet" type="text/css" href="../prism/prism.css">
+  <script type="text/javascript" src="../prism/prism.js"></script>
   <script type="text/javascript" src="Blob.js"></script>
   <script type="text/javascript" src="FileSaver.min.js"></script>
   <script type="text/javascript" src="blockly_helper.js"></script>
@@ -106,8 +108,9 @@
     }
     function renderArduinoCode(e) {
       //console.log('Other code');
-      var arduinoTextarea = document.getElementById('textarea_arduino');
-      arduinoTextarea.value = Blockly.Generator.workspaceToCode('Arduino');
+      var ardu_code = document.getElementById('arduino_code');
+      ardu_code.textContent = Blockly.Generator.workspaceToCode('Arduino');
+      Prism.highlightElement(ardu_code);
       if(e !== null) {
         e.preventDefault();
       }
@@ -151,7 +154,7 @@
      * of the checkbox "peakCodeCheck"
      */
     function peakArduinoCode() {
-      var ardu_div = document.getElementById('content_arduino');
+      var ardu_pre = document.getElementById('arduino_pre');
       var block_div = document.getElementById('content_blocks');
       var peak_code_checkbox = document.getElementById('peakCodeCheck');
       var blocks_iframe = document.getElementById('iframe_blocks');
@@ -164,12 +167,10 @@
         }
 
         // Set Blocks tab
-        //selected = 'blocks';
         document.getElementById('tab_blocks').className = 'tabon';
 
         // Rearrange panels for blocks and arduino code
-        ardu_div.style.display = 'inline-block';
-        ardu_div.className = 'content_arduino_peak';
+        ardu_pre.style.display = 'inline-block';
         block_div.style.display = 'inline-block';
         block_div.className = 'content_block_peak';
 
@@ -183,11 +184,14 @@
         blocks_iframe.contentDocument.addEventListener('dragleave', renderArduinoCode, false);
         blocks_iframe.contentDocument.addEventListener('drop', renderArduinoCode, false);
         blocks_iframe.contentDocument.addEventListener('dragenter', renderArduinoCode, false);
+
+        // highlight the arduino code
+        Prism.highlightElement(ardu_code);
       } else {
         // Restore to original state
         // TODO: not quite working in Chrome
+        ardu_pre.style.display = 'none';
         block_div.className = 'content_block';
-        ardu_div.className = 'content_arduino';
         blocks_iframe.contentDocument.removeEventListener('click', renderArduinoCode, false);
         blocks_iframe.contentDocument.removeEventListener('dragstart', renderArduinoCodeStart, false);
         blocks_iframe.contentDocument.removeEventListener('dragend', renderArduinoCode, false);
@@ -228,7 +232,7 @@
             <td class="tabmax">
               <!--applet code=ArduinoAppletPackage.ArduinoApplet.class archive="../loadsketch/ArduinoApplet.jar" name="ArduApplet" id ="ArduApplet" width="500" height="75"> </applet-->
               <span id="peakCode" style="display:none;">Peak at Code<input type="checkbox" id="peakCodeCheck" onclick="peakArduinoCode()"/></span>
-              <button onclick="renderArduinoCode(null)">Render</button>
+              <!--button onclick="renderArduinoCode(null)">Render</button-->
               <button onclick="discard()">Discard</button>
               <button onclick="save()">Save XML</button>
               <button id="fakeload">Load XML</button>
@@ -245,6 +249,7 @@
         <div id="content_blocks">
           <iframe id="iframe_blocks" src="frame.html"></iframe>
         </div>
+        <pre id="arduino_pre" class="arduino_pre"><code id="arduino_code" class="language-c">code goes here</code></pre>
         <div id="content_arduino">
           <textarea id="textarea_arduino" wrap="off" readonly></textarea>
         </div>
