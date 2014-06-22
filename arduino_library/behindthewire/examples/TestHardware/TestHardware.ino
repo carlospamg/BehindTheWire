@@ -47,7 +47,7 @@ void loop() {
 
   // Read pot
   power = map(analogRead(Throttle),0,1024,0,255);
-  angle = map(power,0,255,-45,45);
+  //angle = map(power,0,255,-45,45);
   if(power != old_power) {
     Serial.println(power);  
     old_power = power;
@@ -56,7 +56,7 @@ void loop() {
   // Set motors and move servo based on pot
   analogWrite(EngineLeft, power);
   analogWrite(EngineRight, power); 
-  functions.rudderSetPosition(angle);
+  //functions.rudderSetPosition(angle);
 
   // Check buttons and LEDs
   ButtonLeft = digitalRead(LeftButton);   // Get the state of On/Left Button
