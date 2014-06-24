@@ -1,1 +1,34 @@
-<xml xmlns="http://www.w3.org/1999/xhtml"><block type="navigation_lights" x="70" y="7"><title name="LED">GreenLight</title><title name="STATE">ON</title><next><block type="navigation_lights"><title name="LED">RedLight</title><title name="STATE">ON</title><next><block type="wait"><title name="WAIT">1000</title><next><block type="navigation_lights"><title name="LED">GreenLight</title><title name="STATE">OFF</title><next><block type="navigation_lights"><title name="LED">RedLight</title><title name="STATE">OFF</title><next><block type="wait"><title name="WAIT">1000</title></block></next></block></next></block></next></block></next></block></next></block></xml>
+<xml xmlns="http://www.w3.org/1999/xhtml">
+  <block type="navigation_lights" x="70" y="7">
+    <title name="LED">GreenLight</title>
+    <title name="STATE">ON</title>
+    <next>
+      <block type="navigation_lights">
+        <title name="LED">RedLight</title>
+        <title name="STATE">ON</title>
+        <next>
+          <block type="wait">
+            <title name="WAIT">1000</title>
+            <next>
+              <block type="navigation_lights">
+                <title name="LED">GreenLight</title>
+                <title name="STATE">OFF</title>
+                <next>
+                  <block type="navigation_lights">
+                    <title name="LED">RedLight</title>
+                    <title name="STATE">OFF</title>
+                    <next>
+                      <block type="wait">
+                        <title name="WAIT">1000</title>
+                      </block>
+                    </next>
+                  </block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </next>
+  </block>
+</xml>

@@ -1,1 +1,44 @@
-<xml xmlns="http://www.w3.org/1999/xhtml"><block type="controls_if" inline="false" x="-22" y="-134"><mutation else="1"></mutation><value name="IF0"><block type="read_button"><title name="Button">LeftButton</title></block></value><statement name="DO0"><block type="navigation_lights"><title name="LED">RedLight</title><title name="STATE">ON</title></block></statement><statement name="ELSE"><block type="navigation_lights"><title name="LED">RedLight</title><title name="STATE">OFF</title></block></statement><next><block type="controls_if" inline="false"><mutation else="1"></mutation><value name="IF0"><block type="read_button"><title name="Button">RightButton</title></block></value><statement name="DO0"><block type="navigation_lights"><title name="LED">GreenLight</title><title name="STATE">ON</title></block></statement><statement name="ELSE"><block type="navigation_lights"><title name="LED">GreenLight</title><title name="STATE">OFF</title></block></statement></block></next></block></xml>
+<xml xmlns="http://www.w3.org/1999/xhtml">
+  <block type="controls_if" inline="false" x="-10" y="-115">
+    <mutation else="1"></mutation>
+    <value name="IF0">
+      <block type="read_button">
+        <title name="Button">LeftButton</title>
+      </block>
+    </value>
+    <statement name="DO0">
+      <block type="navigation_lights">
+        <title name="LED">RedLight</title>
+        <title name="STATE">ON</title>
+      </block>
+    </statement>
+    <statement name="ELSE">
+      <block type="navigation_lights">
+        <title name="LED">RedLight</title>
+        <title name="STATE">OFF</title>
+      </block>
+    </statement>
+    <next>
+      <block type="controls_if" inline="false">
+        <mutation else="1"></mutation>
+        <value name="IF0">
+          <block type="read_button">
+            <title name="Button">RightButton</title>
+          </block>
+        </value>
+        <statement name="DO0">
+          <block type="navigation_lights">
+            <title name="LED">GreenLight</title>
+            <title name="STATE">ON</title>
+          </block>
+        </statement>
+        <statement name="ELSE">
+          <block type="navigation_lights">
+            <title name="LED">GreenLight</title>
+            <title name="STATE">OFF</title>
+          </block>
+        </statement>
+      </block>
+    </next>
+  </block>
+</xml>
