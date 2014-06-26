@@ -3,7 +3,7 @@
  * Just a quick and dirty eval.  No checks for infinite loops, etc.
  */
 function runJS() {
-  var code = Blockly.Generator.workspaceToCode('JavaScript');
+  var code = Blockly.Generator.workspaceToCode('Arduino');
   try {
     eval(code);
   } catch (e) {

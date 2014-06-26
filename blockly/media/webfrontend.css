@@ -68,15 +68,16 @@ td {
   overflow: hidden;
   display: none;
 }
-.arduino_pre {
-  width: 29%;
-  height: 100%;
+.arduino_code_peek {
+  width: 29.5%;
+  height: 100%!important;
+  max-height: 100%;
   padding: 0;
   margin: 0;
   border: 0;
   background-color: #eee;
-  overflow: hidden;
-  float: left;
+  overflow: scroll;
+  float: right;
 }
 .content_block {
   width: 100%;
@@ -87,7 +88,7 @@ td {
   border-top-style: none;
   overflow: hidden;
 }
-.content_block_peak {
+.content_block_peek {
   width: 69%;
   height: 100%;
   padding: 0;

@@ -4,8 +4,8 @@
   <title>BlocklyDuino for Behind the Wire</title>
   <link rel="icon" type="image/png" href="../../media/favicon/favicon.png">
   <link rel="stylesheet" type="text/css" href="../../media/webfrontend.css">
-  <link rel="stylesheet" type="text/css" href="../prism/prism.css">
-  <script type="text/javascript" src="../prism/prism.js"></script>
+  <link rel="stylesheet" type="text/css" href="prism/prism.css">
+  <script type="text/javascript" src="prism/prism.js"></script>
   <script type="text/javascript" src="Blob.js"></script>
   <script type="text/javascript" src="FileSaver.min.js"></script>
   <script type="text/javascript" src="blockly_helper.js"></script>
@@ -45,12 +45,12 @@
         }
       }
 
-      // Deselect the checkbox, hide and revert peak changes
-      var peak_code_checkbox = document.getElementById('peakCodeCheck');
-      var peak_code_span = document.getElementById('peakCode');
-      peak_code_checkbox.checked = false;
-      peakArduinoCode();
-      peak_code_span.style.display = 'none';
+      // Deselect the checkbox, hide and revert peek changes
+      var peek_code_checkbox = document.getElementById('peekCodeCheck');
+      var peek_code_span = document.getElementById('peekCode');
+      peek_code_checkbox.checked = false;
+      peekArduinoCode();
+      peek_code_span.style.display = 'none';
 
       // Deselect all tabs and hide all panes.
       for (var x in TABS_) {
@@ -66,9 +66,9 @@
       content.style.display = 'block';
       renderContent();
       
-      //if block planel display, show peak code checkbox
+      //if block planel display, show peek code checkbox
       if(selected == 'blocks') {
-        peak_code_span.style.display = 'inline';
+        peek_code_span.style.display = 'inline';
       }
     }
 
@@ -82,6 +82,10 @@
         // If the workspace was changed by the XML tab, Firefox will have performed
         // an incomplete rendering due to Blockly being invisible.  Rerender.
         Blockly.mainWorkspace.render();
+        //Check if the arduino code peek is showing
+        if(document.getElementById('arduino_code_peek').style.display != 'none' ) {
+           renderArduinoCode(null);
+        }
       } else if (content.id == 'content_xml') {
         var xmlTextarea = document.getElementById('textarea_xml');
         var xmlDom = Blockly.Xml.workspaceToDom(Blockly.mainWorkspace);
@@ -121,14 +125,7 @@
      * @param {!Blockly} blockly Instance of Blockly from iframe.
      */
     function init(blockly) {
-      //window.onbeforeunload = function() {
-      //  return 'Leaving this page will result in the loss of your work.';
-      //};
-
       window.Blockly = blockly;
-
-      // var blockly_frame = document.getElementById("content_blocks");
-      // Blockly.inject(blockly_frame, {path: '../../'});
 
       // Make the 'Blocks' tab line up with the toolbox.
       if (Blockly.Toolbox) {
@@ -151,17 +148,17 @@
 
     /**
      * Configure the Block panel to display the code on the right based on the state
-     * of the checkbox "peakCodeCheck"
+     * of the checkbox "peekCodeCheck"
      */
-    function peakArduinoCode() {
-      var ardu_pre = document.getElementById('arduino_pre');
+    function peekArduinoCode() {
+      var ardu_code_peek = document.getElementById('arduino_code_peek');
       var block_div = document.getElementById('content_blocks');
-      var peak_code_checkbox = document.getElementById('peakCodeCheck');
+      var peek_code_checkbox = document.getElementById('peekCodeCheck');
       var blocks_iframe = document.getElementById('iframe_blocks');
       
-      if(peak_code_checkbox.checked) {
+      if(peek_code_checkbox.checked) {
         // Deselect all tabs and panels
-        for (var x in TABS_) {
+        for(var x in TABS_) {
           document.getElementById('tab_' + TABS_[x]).className = 'taboff';
           document.getElementById('content_' + TABS_[x]).style.display = 'none';
         }
@@ -170,9 +167,9 @@
         document.getElementById('tab_blocks').className = 'tabon';
 
         // Rearrange panels for blocks and arduino code
-        ardu_pre.style.display = 'inline-block';
         block_div.style.display = 'inline-block';
-        block_div.className = 'content_block_peak';
+        block_div.className = 'content_block_peek';
+        ardu_code_peek.style.display = 'inline-block';
 
         // Regenerate arduino code and ensure every click does as well
         // TODO: not quite working in Chrome
@@ -184,14 +181,9 @@
         blocks_iframe.contentDocument.addEventListener('dragleave', renderArduinoCode, false);
         blocks_iframe.contentDocument.addEventListener('drop', renderArduinoCode, false);
         blocks_iframe.contentDocument.addEventListener('dragenter', renderArduinoCode, false);
-
-        // highlight the arduino code
-        Prism.highlightElement(ardu_code);
       } else {
-        // Restore to original state
+        // Remove action listeners
         // TODO: not quite working in Chrome
-        ardu_pre.style.display = 'none';
-        block_div.className = 'content_block';
         blocks_iframe.contentDocument.removeEventListener('click', renderArduinoCode, false);
         blocks_iframe.contentDocument.removeEventListener('dragstart', renderArduinoCodeStart, false);
         blocks_iframe.contentDocument.removeEventListener('dragend', renderArduinoCode, false);
@@ -199,6 +191,11 @@
         blocks_iframe.contentDocument.removeEventListener('dragleave', renderArduinoCode, false);
         blocks_iframe.contentDocument.removeEventListener('drop', renderArduinoCode, false);
         blocks_iframe.contentDocument.removeEventListener('dragenter', renderArduinoCode, false);
+
+        // Restore to original state
+        ardu_code_peek.style.display = 'none';
+        block_div.className = 'content_block';
+        block_div.style.display = 'block';
 
         // Deselect all tabs and panels
         for (var x in TABS_) {
@@ -231,7 +228,7 @@
             <td id="tab_xml" class="taboff" onclick="tabClick(this.id)">XML</td>
             <td class="tabmax">
               <!--applet code=ArduinoAppletPackage.ArduinoApplet.class archive="../loadsketch/ArduinoApplet.jar" name="ArduApplet" id ="ArduApplet" width="500" height="75"> </applet-->
-              <span id="peakCode" style="display:none;">Peak at Code<input type="checkbox" id="peakCodeCheck" onclick="peakArduinoCode()"/></span>
+              <span id="peekCode" style="display:none;">Peek at Code<input type="checkbox" id="peekCodeCheck" onclick="peekArduinoCode()"/></span>
               <!--button onclick="renderArduinoCode(null)">Render</button-->
               <button onclick="discard()">Discard</button>
               <button onclick="save()">Save XML</button>
@@ -245,11 +242,13 @@
       </td>
     </tr>
     <tr>
-      <td height="99%">
+      <td height="100%" style="background:#eee;">
         <div id="content_blocks">
           <iframe id="iframe_blocks" src="frame.html"></iframe>
         </div>
-        <pre id="arduino_pre" class="arduino_pre"><code id="arduino_code" class="language-c">code goes here</code></pre>
+        <div id="arduino_code_peek" class="arduino_code_peek">
+          <pre id="arduino_pre" class="language-cpp"><code id="arduino_code" class="language-cpp">code goes here</code></pre>
+        </div>
         <div id="content_arduino">
           <textarea id="textarea_arduino" wrap="off" readonly></textarea>
         </div>
