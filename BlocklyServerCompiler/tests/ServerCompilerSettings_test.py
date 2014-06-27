@@ -1,16 +1,22 @@
 import unittest
+import ParentDirToSysPath
 from ServerCompilerSettings import ServerCompilerSettings
 
 
 class ServerCompilerSettingsTestCase(unittest.TestCase):
-    """ Tests for ServerCompilerSettings """
+    """
+    Tests for ServerCompilerSettings
+    """
     
+    #
+    # Testing the class singlentoness
+    #
     def test_singleton(self):
         # Testing if singleton is working
         instance_1 = ServerCompilerSettings()
         instance_2 = ServerCompilerSettings()
         self.assertEqual(id(instance_1), id(instance_2))
-
+    
     #
     # Testing the compiler_dir getter and setter
     #
@@ -22,7 +28,7 @@ class ServerCompilerSettingsTestCase(unittest.TestCase):
         ServerCompilerSettings().compiler_dir = new_dir
         self.assertEqual(new_dir, ServerCompilerSettings().compiler_dir)
         self.assertNotEqual(original_dir, ServerCompilerSettings().compiler_dir)
-
+    
     #
     # Testing the settings file
     #
