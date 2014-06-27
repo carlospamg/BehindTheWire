@@ -115,3 +115,6 @@ BlocklyDuinoSketch.ino
 
 # Server App settinsg file generated
 ServerCompilerSettings.ini
+
+# Anything starting with this is created as a unit/module testing temporal file
+TestTemp_*

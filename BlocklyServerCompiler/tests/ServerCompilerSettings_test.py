@@ -21,7 +21,7 @@ class ServerCompilerSettingsTestCase(unittest.TestCase):
     # Testing the compiler_dir getter and setter
     #
     def test_read_compiler_dir(self):
-        new_dir = "this is the new text"
+        new_dir = "C:\\"
         original_dir = ServerCompilerSettings().compiler_dir
         self.assertEqual(original_dir, ServerCompilerSettings()._compiler_dir)
         
@@ -33,7 +33,9 @@ class ServerCompilerSettingsTestCase(unittest.TestCase):
     # Testing the settings file
     #
     def test_settings_file_creation(self):
+        """ Need to find a way to test this one """
         ServerCompilerSettings().save_settings()
+        self.assertEqual(0,0)
 
 
 if __name__ == '__main__':

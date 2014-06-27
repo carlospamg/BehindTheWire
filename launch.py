@@ -25,13 +25,11 @@ def open_browser():
 
 def main(): 
     print("Running Python version " + platform.python_version() + "\n")
-    print("Selected file: ")
-    BlocklyServerCompiler.BlocklyRequestHandler.browse_compiler_executable()
-    test_instance = BlocklyServerCompiler.SketchCreator()
-    test_instance.create_sketch()
-    BlocklyServerCompiler.BlocklyRequestHandler.launch_command_line()
-    print("\nList of available ports:")
-    BlocklyServerCompiler.PySerialListPorts.list_ports.main()
+    #print("Selected file: ")
+    #BlocklyServerCompiler.BlocklyRequestHandler.browse_compiler_executable()
+    #BlocklyServerCompiler.BlocklyRequestHandler.launch_command_line()
+    #print("\nList of available ports:")
+    #BlocklyServerCompiler.PySerialListPorts.list_ports.main()
     open_browser()
     print("")
     BlocklyServerCompiler.start_server(os.getcwd())
