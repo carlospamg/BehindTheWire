@@ -3,7 +3,7 @@
   <meta charset="utf-8">
   <title>BlocklyDuino for Behind the Wire</title>
   <link rel="icon" type="image/png" href="../../media/favicon/favicon.png">
-  <link rel="stylesheet" type="text/css" href="../../media/webfrontend.css">
+  <link rel="stylesheet" type="text/css" href="blockyduino.css">
   <link rel="stylesheet" type="text/css" href="prism/prism.css">
   <script type="text/javascript" src="prism/prism.js"></script>
   <script type="text/javascript" src="Blob.js"></script>
@@ -241,13 +241,13 @@
         </table>
       </td>
     </tr>
-    <tr>
-      <td height="100%" style="background:#eee;">
-        <div id="content_blocks">
+    <tr >
+      <td height="99%" style="background:#eee;position:relative;">
+        <div id="content_blocks" class="content_block">
           <iframe id="iframe_blocks" src="frame.html"></iframe>
         </div>
-        <div id="arduino_code_peek" class="arduino_code_peek">
-          <pre id="arduino_pre" class="language-cpp"><code id="arduino_code" class="language-cpp">code goes here</code></pre>
+        <div id="arduino_code_peek">
+          <pre id="arduino_pre"><code id="arduino_code" class="language-cpp">code goes here</code></pre>
         </div>
         <div id="content_arduino">
           <textarea id="textarea_arduino" wrap="off" readonly></textarea>

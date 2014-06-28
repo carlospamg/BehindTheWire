@@ -1,8 +1,12 @@
+html {
+  height: 100%!important;
+}
 body {
   background-color: white;
   font-family: sans-serif;
+  height: 100%;
   margin: 0;
-  padding:0;
+  padding: 0;
   overflow: hidden;
 }
 .blocklySvg {
@@ -68,17 +72,24 @@ td {
   overflow: hidden;
   display: none;
 }
-.arduino_code_peek {
-  width: 29.5%;
+#arduino_code_peek {
+  position: absolute;
+  width: 29%;
   height: 100%!important;
-  max-height: 100%;
+  right: 0px;
+  bottom: 0px;
+  float: right;
   padding: 0;
   margin: 0;
   border: 0;
   background-color: #eee;
   overflow: scroll;
-  float: right;
+  display: none;
 }
+#arduino_code_peek pre,
+#arduino_code_peek code {
+    overflow: visible;
+}  
 .content_block {
   width: 100%;
   height: 100%;
@@ -89,7 +100,7 @@ td {
   overflow: hidden;
 }
 .content_block_peek {
-  width: 69%;
+  width: 70%;
   height: 100%;
   padding: 0;
   margin: 0;
