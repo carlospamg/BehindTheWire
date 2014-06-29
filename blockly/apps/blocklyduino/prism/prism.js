@@ -420,3 +420,30 @@ Prism.languages.cpp = Prism.languages.extend('c', {
 	'operator': /[-+]{1,2}|!=?|&lt;{1,2}=?|&gt;{1,2}=?|\-&gt;|:{1,2}|={1,2}|\^|~|%|(&amp;){1,2}|\|?\||\?|\*|\/|\b(and|and_eq|bitand|bitor|not|not_eq|or|or_eq|xor|xor_eq)\b/g
 });
 ;
+Prism.languages.arduino = Prism.languages.extend('cpp', {
+	'property': {
+		pattern: /#[a-zA-Z]+\ .*|\b(setup|loop)\b/g,
+		inside: {
+			punctuation: /\(/,
+			property: /&lt;[a-zA-Z.]+>/g
+		}
+    },
+	'function': /JUST_NEED_TO_OVERWRITE_THIS_REGULAR_EXPRESSION/g,
+	'arduino': {
+		pattern: /\b(pinMode|digitalWrite|digitalRead|analogReference|analogRead|analogWrite|tone|noTone|shiftOut|shiftIn|pulseIn|delay|millis|micros|delayMicroseconds|Serial|Stream|Keyboard|Mouse|interrupts|nointerrupts|attachInterrupt|detachInterrupt)/g,
+		lookbehind: false,
+		inside: {
+			punctuation: /\(/
+		}
+	},
+	'btw': /\b(BehindTheWire)\b/g,
+	'btw_constants': /\b(GreenLight|RedLight|WhiteLight|YellowLight|EngineLeft|EngineRight|Throttle|LeftButton|RightButton|OnButton|OffButton)\b/g,
+	'btw_direction': /\b(OUTPUT|INPUT|ON|OFF|PRESSED|NOT_PRESSED)\b/g,
+	'btw_rudder': {
+		pattern: /\b(rudderPrepare|rudderLeft|rudderRight|rudderCentre|rudderSetPosition)\b/g,
+		inside: {
+			punctuation: /\(/,
+		}
+	}
+});
+;

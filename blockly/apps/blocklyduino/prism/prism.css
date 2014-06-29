@@ -84,7 +84,6 @@ pre[class*="language-"] {
 .token.property,
 .token.tag,
 .token.boolean,
-.token.number,
 .token.constant,
 .token.symbol {
 	color: #905;
@@ -110,7 +109,7 @@ pre[class*="language-"] {
 .token.atrule,
 .token.attr-value,
 .token.keyword {
-	color: #07a;
+	color: #690;
 }
 
 
@@ -127,3 +126,17 @@ pre[class*="language-"] {
 	cursor: help;
 }
 
+.token.arduino{
+	color: #515C68;
+}
+.token.btw{
+	color: #AE81FF;
+}
+.token.btw_constants{
+
+		color: #59A7C7;
+}
+.token.number,
+.token.btw_direction{
+	color: #E90;
+}
