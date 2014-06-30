@@ -14,6 +14,11 @@ BehindTheWire	KEYWORD1
 landingGearPrepare	KEYWORD2
 landingGearUp	KEYWORD2
 landingGearDown	KEYWORD2
+rudderPrepare	KEYWORD2
+rudderLeft	KEYWORD2
+rudderRight	KEYWORD2
+rudderCentre	KEYWORD2
+rudderSetPosition	KEYWORD2
 
 #######################################
 # Constants (LITERAL1)
@@ -31,6 +36,8 @@ WhiteLight	LITERAL1
 GreenLight	LITERAL1
 OnButton	LITERAL1
 OffButton	LITERAL1
+LeftButton	LITERAL1
+RightButton	LITERAL1
 
 UpLight	LITERAL1
 DownLight	LITERAL1
