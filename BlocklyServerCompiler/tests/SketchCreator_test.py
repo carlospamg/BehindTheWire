@@ -15,7 +15,7 @@ class SketchCreatorTestCase(unittest.TestCase):
     #
     def test_createDirectory(self):
         """ Tests to see if an Arduino Sketch is created in a new location"""
-        test_sketch_name = 'TestSketch'
+        test_sketch_name = 'TestTemp_Sketch'
         ServerCompilerSettings().sketch_dir = os.getcwd()
         ServerCompilerSettings().sketch_name = test_sketch_name
         test_path = os.path.join(os.getcwd(), 

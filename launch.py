@@ -1,4 +1,4 @@
-#!python2
+#!/usr/bin/env python2
 ###############################################################################
 # The comment above works if the Python Launcher for Windows path included
 # in Python>3.3  does not conflict with the py.exe file added to "C:\Windows"

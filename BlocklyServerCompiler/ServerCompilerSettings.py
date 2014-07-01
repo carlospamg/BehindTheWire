@@ -3,18 +3,26 @@ import ConfigParser
 
 class ServerCompilerSettings(object):
     """
-    Retrieves and saves the settings for this Server Compiler
+    Retrieves and saves the settings for the server side compilation.
+    No compiler is part of the Python code, instead settings that 
+    point to the local Arduino IDE and sketch are stored here.
     """
     
     # Designed to be immutable variables
     _singleton_instance = None
     _settings_filename = "ServerCompilerSettings.ini"
+    _settings_path = "ServerCompilerSettings.ini"
     
     # Settings with getters and setters
     _launch_IDE_only = False
     _compiler_dir = "C:\\IDEs\\arduino-1.5.6-r2\\arduino.exe"
     _sketch_dir = "G:\\GE\\CSF\\git\\BlocklyDuino"
     _sketch_name = "BlocklyDuinoSketch"
+    _arduino_board = {'Uno': 'avr:uno',
+                      'Leonardo': 'avr:leonardo',
+                      'Mega': 'avr:mega',
+                      'Duemilanove_ATmega328p': 'avr:diecimila',
+                      'Duemilanove_ATmega168p': 'avr:diecimila:cpu=atmega168'}
     
     #
     # Singleton creator 
@@ -25,7 +33,7 @@ class ServerCompilerSettings(object):
             cls._singleton_instance = super(ServerCompilerSettings, cls).__new__(cls, *args, **kwargs)
             cls._sketch_dir = os.getcwd()
         return cls._singleton_instance
-    
+     
     #
     # Getters and Setters
     #
@@ -61,16 +69,34 @@ class ServerCompilerSettings(object):
     def save_settings(cls):
         settings_parser = ConfigParser.ConfigParser()
         settings_parser.add_section('Arduino_IDE')
-        settings_parser.set('Arduino_IDE', 'Arduino_Executable_Directory', cls._compiler_dir)
-        settings_parser.set('Arduino_IDE', 'Arduino_Board', cls._compiler_dir)
-        settings_parser.set('Arduino_IDE', 'Arduino_COM_Port', cls._compiler_dir)
+        settings_parser.set('Arduino_IDE',
+                            'Arduino_Executable_Directory',
+                            cls._compiler_dir)
+        settings_parser.set('Arduino_IDE',
+                            'Arduino_Board',
+                            cls._compiler_dir)
+        settings_parser.set('Arduino_IDE',
+                            'Arduino_COM_Port',
+                            cls._compiler_dir)
         settings_parser.add_section('Arduino_Sketch')
-        settings_parser.set('Arduino_Sketch', 'Sketch_Name', cls._sketch_name)
-        settings_parser.set('Arduino_Sketch', 'Sketch_Directory', cls._sketch_dir)
-        settings_file = open( os.path.join( os.getcwd(),
-                                           cls._settings_filename),'w')
+        settings_parser.set('Arduino_Sketch',
+                            'Sketch_Name',
+                            cls._sketch_name)
+        settings_parser.set('Arduino_Sketch',
+                            'Sketch_Directory',
+                            cls._sketch_dir)
+        
+        # Set the path and create/overwrite the file
+        cls._settings_path = os.path.join( os.getcwd(),
+                                           cls._settings_filename)
+        settings_file = open( cls._settings_path,'w')
         settings_parser.write(settings_file)
         settings_file.close()
+
+    def delete_settings(cls):
+        if os.path.exists(cls._settings_path):
+            os.remove(cls._settings_path)
+
 
 def main():
     # This should never be executed
