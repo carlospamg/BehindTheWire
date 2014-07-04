@@ -21,7 +21,7 @@ class BlockyHTTPServer(SimpleHTTPServer.SimpleHTTPRequestHandler):
         except:
             result = 'error'
         
-        BlocklyRequestHandler.launch_command_line()
+        BlocklyRequestHandler.execute_command_line()
         
         self.wfile.write(result)
 

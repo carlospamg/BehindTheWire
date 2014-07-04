@@ -1,6 +1,9 @@
+from __future__ import unicode_literals
+import os
 import unittest
 import mock
 import ParentDirToSysPath
+from BlocklyServerCompiler import ServerCompilerSettings
 import BlocklyRequestHandler
 
 
@@ -8,21 +11,69 @@ class BlocklyRequestHandlerTestCase(unittest.TestCase):
     """
     Tests for BlocklyRequestHandler module
     """
-    
-    def test_command_line(self):
+
+    #
+    # Command line tests
+    #
+    @mock.patch('BlocklyRequestHandler.os')
+    @mock.patch('BlocklyRequestHandler.create_sketch_from_string')
+    @mock.patch.object(BlocklyRequestHandler.ServerCompilerSettings, 'get_compiler_dir',  autospec=True)
+    def test_command_line_launch(self, mock_settings, mock_sketch, mock_os):
         """
         Tests that a compiler path and arduino sketch path cam ne set
         and that a command line can be launched to open the sketch in the
         Arduino IDE
         """
-        BlocklyRequestHandler.set_compiler_path()
-        BlocklyRequestHandler.execute_command_line()
+        # Set the compiler settings
+        test_sketch_path = os.path.join(os.getcwd(), 'sketch.ino')
+        mock_sketch.return_value = test_sketch_path
 
-    #@mock.patch('BlocklyRequestHandler.os')
-    #def test_compiler_path(self, mock_os):
-    #    new_comp_path = BlocklyRequestHandler.set_compiler_path()
-    #    #mock_os.remove.assert_called_with()
-    #    self.assertEqual(new_comp_path, BlocklyRequestHandler.get_compiler_path())
+        test_compiler_dir = os.path.join(os.getcwd(), 'arduino.exe')
+        mock_settings = BlocklyRequestHandler.ServerCompilerSettings()
+        mock_settings.__compiler_dir__ = test_compiler_dir
+
+        # Build expected string and run test
+        expected_command = test_compiler_dir + ' "' + test_sketch_path + '"'
+        BlocklyRequestHandler.execute_command_line()
+        mock_os.system.assert_called_with(expected_command)
+
+
+    #
+    # Tests for checking browsing for paths and files
+    #
+    @mock.patch('BlocklyRequestHandler.tkFileDialog')
+    def test_browse_file(self, mock_file_select):
+        test_file = 'test_file'
+        mock_file_select.askopenfilename.return_value = test_file
+        new_file = BlocklyRequestHandler.browse_file()
+        self.assertEqual(new_file, test_file)
+
+
+    def test_browse_file_cancel(self):
+        canceled_file = ''
+        print('A file browser window will open, to successfully run this test '
+              'press cancel or close the window!!!\n')
+        #raw_input('Press "Enter" to continue...')
+        function_file = BlocklyRequestHandler.browse_file()
+        self.assertEqual(canceled_file, function_file)
+
+
+    @mock.patch('BlocklyRequestHandler.tkFileDialog')
+    def test_browse_path(self, mock_path_select):
+        test_path = 'test_path'
+        mock_path_select.askopenfilename.return_value = test_path
+        new_path = BlocklyRequestHandler.browse_file()
+        self.assertEqual(new_path, test_path)
+
+
+    def test_browse_path_cancel(self):
+        canceled_path = ''
+        print('A path browser window will open, to successfully run this test '
+              'press cancel or close the window!!!\n')
+        #raw_input('Press "Enter" to continue...')
+        function_path = BlocklyRequestHandler.browse_dir()
+        self.assertEqual(canceled_path, function_path)
+
 
 if __name__ == '__main__':
     unittest.main()
