@@ -2,6 +2,7 @@ from __future__ import unicode_literals
 import os
 import unittest
 import mock
+from BlocklyServerCompiler import ServerCompilerSettings
 import ParentDirToSysPath
 from ServerCompilerSettings import ServerCompilerSettings
 
@@ -71,6 +72,13 @@ class ServerCompilerSettingsTestCase(unittest.TestCase):
         """ Need to find a way to test this one """
         ServerCompilerSettings().save_settings()
         self.assertEqual(0,0)
+
+    def test_settings_file_read(self):
+        ServerCompilerSettings()
+        ServerCompilerSettings().set_default_settings()
+        ServerCompilerSettings().read_settings_file()
+        ServerCompilerSettings().save_settings()
+        #ServerCompilerSettings().read_settings()
 
 
 if __name__ == '__main__':
