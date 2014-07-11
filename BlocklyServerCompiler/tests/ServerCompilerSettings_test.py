@@ -20,24 +20,30 @@ class ServerCompilerSettingsTestCase(unittest.TestCase):
         instance_1 = ServerCompilerSettings()
         instance_2 = ServerCompilerSettings()
         self.assertEqual(id(instance_1), id(instance_2))
-    
+
+    def test_destructor(self):
+        ServerCompilerSettings()
+        instance_1 = ServerCompilerSettings()
+        instance_1._drop()
+        self.assertEqual(instance_1.__singleton_instance__, None)
+
     #
     # Testing the compiler_dir getter and setter
     #
     def test_read_compiler_dir(self):
         self.assertEqual(ServerCompilerSettings().compiler_dir, ServerCompilerSettings().__compiler_dir__)
 
-    @mock.patch('ServerCompilerSettings.os')
-    def test_write_compiler_dir_invalid(self, mock_os):
+    @mock.patch('ServerCompilerSettings.os.path.exists')
+    def test_write_compiler_dir_invalid(self, mock_os_path_exists):
         """
         Tests path doesn't get save if:
              A file that does not exists
              Just a folder
              A non executable file
         """
-        # TODO: a file that exists and does not execute is not done
+        # TODO: a file that 'exists but does not execute' is not done
         # Random file
-        mock_os.path.exists.return_value = False
+        mock_os_path_exists.return_value = False
         original_dir = ServerCompilerSettings().compiler_dir
         new_dir = os.path.join(os.getcwd(), 'random.exe')
         ServerCompilerSettings().compiler_dir = new_dir
@@ -45,22 +51,22 @@ class ServerCompilerSettingsTestCase(unittest.TestCase):
         self.assertEqual(original_dir, ServerCompilerSettings().compiler_dir)
 
         # Just a folder
-        mock_os.path.exists.return_value = True
+        mock_os_path_exists.return_value = True
         new_dir = os.getcwd()
         ServerCompilerSettings().compiler_dir = new_dir
         self.assertNotEqual(new_dir, ServerCompilerSettings().compiler_dir)
         self.assertEqual(original_dir, ServerCompilerSettings().compiler_dir)
 
         # Non .exe file
-        mock_os.path.exists.return_value = True
+        mock_os_path_exists.return_value = True
         new_dir = os.path.join(os.getcwd(), 'arduino.txt')
         ServerCompilerSettings().compiler_dir = new_dir
         self.assertNotEqual(new_dir, ServerCompilerSettings().compiler_dir)
         self.assertEqual(original_dir, ServerCompilerSettings().compiler_dir)
 
-    @mock.patch('ServerCompilerSettings.os')
-    def test_write_compiler_dir_valid(self, mock_os):
-        mock_os.path.exists.return_value = True
+    @mock.patch('ServerCompilerSettings.os.path.exists')
+    def test_write_compiler_dir_valid(self, mock_os_path_exists):
+        mock_os_path_exists.return_value = True
         new_dir = os.path.join(os.getcwd(), 'arduino.exe')
         ServerCompilerSettings().compiler_dir = new_dir
         self.assertEqual(new_dir, ServerCompilerSettings().compiler_dir)
@@ -78,7 +84,6 @@ class ServerCompilerSettingsTestCase(unittest.TestCase):
         ServerCompilerSettings().set_default_settings()
         ServerCompilerSettings().read_settings_file()
         ServerCompilerSettings().save_settings()
-        #ServerCompilerSettings().read_settings()
 
 
 if __name__ == '__main__':
