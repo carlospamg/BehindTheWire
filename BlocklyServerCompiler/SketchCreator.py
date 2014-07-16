@@ -1,5 +1,6 @@
+from __future__ import unicode_literals, absolute_import
 import os
-from ServerCompilerSettings import ServerCompilerSettings
+from BlocklyServerCompiler.ServerCompilerSettings import ServerCompilerSettings
 
 class SketchCreator(object):
     """

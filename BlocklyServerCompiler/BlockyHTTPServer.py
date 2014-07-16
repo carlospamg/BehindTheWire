@@ -1,8 +1,8 @@
+from __future__ import unicode_literals, absolute_import
 import os
 import BaseHTTPServer
 import SimpleHTTPServer
-import json
-import BlocklyRequestHandler
+import BlocklyServerCompiler.BlocklyRequestHandler
 
 PORT = 8000
 
@@ -21,7 +21,7 @@ class BlockyHTTPServer(SimpleHTTPServer.SimpleHTTPRequestHandler):
         except:
             result = 'error'
         
-        BlocklyRequestHandler.execute_command_line()
+        BlocklyServerCompiler.BlocklyRequestHandler.execute_command_line()
         
         self.wfile.write(result)
 

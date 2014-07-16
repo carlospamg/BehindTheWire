@@ -1,8 +1,7 @@
-from __future__ import unicode_literals
+from __future__ import unicode_literals, absolute_import
 import os
 import unittest
 import mock
-from BlocklyServerCompiler import ServerCompilerSettings
 import ParentDirToSysPath
 from ServerCompilerSettings import ServerCompilerSettings
 
