@@ -3,7 +3,7 @@ import os
 import unittest
 import mock
 import ParentDirToSysPath
-from ServerCompilerSettings import ServerCompilerSettings
+from BlocklyServerCompiler.ServerCompilerSettings import ServerCompilerSettings
 
 
 class ServerCompilerSettingsTestCase(unittest.TestCase):

@@ -2,27 +2,27 @@ from __future__ import unicode_literals, absolute_import
 import os
 import unittest
 import ParentDirToSysPath
-from SketchCreator import SketchCreator
-from ServerCompilerSettings import ServerCompilerSettings
+from BlocklyServerCompiler.SketchCreator import SketchCreator
+from BlocklyServerCompiler.ServerCompilerSettings import ServerCompilerSettings
 
 
 class SketchCreatorTestCase(unittest.TestCase):
     """
-    Tests for SketchCreator
+    Tests for SketchCreator class
     """
     
     #
     # File creation
     #
-    def test_createDirectory(self):
-        """ Tests to see if an Arduino Sketch is created in a new location"""
+    def test_create_directory(self):
+        """ Tests to see if an Arduino Sketch is created in a new location """
         test_sketch_name = 'TestTemp_Sketch'
         ServerCompilerSettings().sketch_dir = os.getcwd()
         ServerCompilerSettings().sketch_name = test_sketch_name
         test_path = os.path.join(os.getcwd(), 
                                  test_sketch_name,
                                  test_sketch_name + '.ino')
-        # It should be save to create and delte in test folder
+        # It should be save to create and delete in test folder
         if os.path.exists(test_path):
             os.remove(test_path)
         print('\ntest_createDirectory() message:')

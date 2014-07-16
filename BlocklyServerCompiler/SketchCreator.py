@@ -1,6 +1,8 @@
 from __future__ import unicode_literals, absolute_import
 import os
+from BlocklyServerCompiler.Py23Compatibility import Py23Compatibility
 from BlocklyServerCompiler.ServerCompilerSettings import ServerCompilerSettings
+
 
 class SketchCreator(object):
     """
@@ -22,29 +24,37 @@ void loop() {
     #
     # Constructor
     #
-    #def __init__(self):
-    
+    def __init__(self):
+        pass
     
     #
     # Creating files
     #
     def create_sketch(self, sketch_code=None):
         """
-        Creates the ardunino sketch with either the default blinky
+        Creates the Ardunino sketch with either the default blinky
         code or the code defined in the input parameter
+
+        :param sketch_code: Unicode string with the code for the sketch
+        :return: Unicode string with full path to the sketch file
+                 Return None indicates an error has occurred
         """
         sketch_path = self.build_sketch_path()
-        if isinstance(sketch_code, str) and sketch_code:
+        if isinstance(sketch_code, Py23Compatibility.string_type_compare)\
+                and sketch_code:
             code_to_write = sketch_code
         else:
             code_to_write = self._sketch_default_code
+
         try:
             arduino_sketch = open(sketch_path, 'w')
             arduino_sketch.write(code_to_write)
             arduino_sketch.close()
-        except:
+        except Exception as e:
             sketch_path = None
-        
+            print(e)
+            print('Arduino sketch could not be created!!!')
+
         return sketch_path
     
     #
@@ -53,17 +63,22 @@ void loop() {
     def build_sketch_path(self):
         """
         If a valid directory is saved in the settings, it creates the Arduino
-        folder if required and returns a string pointing to the sketch path
+        folder (if it does not exists already) and returns a string pointing
+        to the sketch path
+        :return: unicode string with full path to the sketch file
+                 Return None indicates an error has occurred
         """
         sketch_name = ServerCompilerSettings().sketch_name
         sketch_directory = ServerCompilerSettings().sketch_dir
         sketch_path = None
         
-        if os.path.exists(sketch_directory):
+        if os.path.isdir(sketch_directory):
             sketch_path = os.path.join(sketch_directory, sketch_name)
             if not os.path.exists(sketch_path):
                 os.makedirs(sketch_path)
             sketch_path = os.path.join(sketch_path, sketch_name + '.ino')
+        else:
+            print('The sketch directory in the settings does not exists!')
         
         return sketch_path 
 
