@@ -1,6 +1,7 @@
+from __future__ import unicode_literals, absolute_import
 import unittest
 import ParentDirToSysPath
-from XXXX import XXXX
+from BlocklyServerCompiler.XXXX import XXXX
 
 
 class XXXXTestCase(unittest.TestCase):

@@ -32,7 +32,7 @@ class ServerCompilerSettingsTestCase(unittest.TestCase):
     def test_read_compiler_dir(self):
         self.assertEqual(ServerCompilerSettings().compiler_dir, ServerCompilerSettings().__compiler_dir__)
 
-    @mock.patch('ServerCompilerSettings.os.path.exists')
+    @mock.patch('BlocklyServerCompiler.ServerCompilerSettings.os.path.exists')
     def test_write_compiler_dir_invalid(self, mock_os_path_exists):
         """
         Tests path doesn't get save if:
@@ -63,7 +63,7 @@ class ServerCompilerSettingsTestCase(unittest.TestCase):
         self.assertNotEqual(new_dir, ServerCompilerSettings().compiler_dir)
         self.assertEqual(original_dir, ServerCompilerSettings().compiler_dir)
 
-    @mock.patch('ServerCompilerSettings.os.path.exists')
+    @mock.patch('BlocklyServerCompiler.ServerCompilerSettings.os.path.exists')
     def test_write_compiler_dir_valid(self, mock_os_path_exists):
         mock_os_path_exists.return_value = True
         new_dir = os.path.join(os.getcwd(), 'arduino.exe')

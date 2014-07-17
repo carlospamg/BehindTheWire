@@ -8,4 +8,4 @@ import os
 import sys
 
 # Import the parent directory into the system path
-sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+sys.path.append(os.path.join(os.path.dirname(__file__), os.path.pardir, os.path.pardir))
