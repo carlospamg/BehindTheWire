@@ -34,7 +34,7 @@ class BlocklyRequestHandlerTestCase(unittest.TestCase):
 
         # Build expected string and run test
         expected_command = test_compiler_dir + ' "' + test_sketch_path + '"'
-        BlocklyRequestHandler.execute_command_line()
+        BlocklyRequestHandler.load_sketch()
         mock_os.system.assert_called_with(expected_command)
 
     #

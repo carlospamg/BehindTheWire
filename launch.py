@@ -11,8 +11,7 @@ import platform
 import threading
 import webbrowser
 import BlocklyServerCompiler.ServerCompilerSettings
-import BlocklyServerCompiler.BlockyHTTPServer
-import BlocklyServerCompiler
+import BlocklyServerCompiler.BlocklyHTTPServer
 
 BLOCKLY_INDEX = 'blockly/apps/blocklyduino/index.html'
 PORT = 8000
@@ -28,14 +27,9 @@ def open_browser():
 
 def main(): 
     print('Running Python version ' + platform.python_version() + "\n")
-    #print("Selected file: ")
-    #BlocklyServerCompiler.BlocklyRequestHandler.browse_compiler_executable()
-    #BlocklyServerCompiler.BlocklyRequestHandler.launch_command_line()
-    #print("\nList of available ports:")
-    #BlocklyServerCompiler.PySerialListPorts.list_ports.main()
+    BlocklyServerCompiler.ServerCompilerSettings.ServerCompilerSettings()
     open_browser()
-    print("")
-    BlocklyServerCompiler.BlockyHTTPServer.start_server(os.getcwd())
+    BlocklyServerCompiler.BlocklyHTTPServer.start_server(os.getcwd())
     
 
 if __name__ == "__main__":
