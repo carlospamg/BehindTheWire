@@ -13,6 +13,8 @@ BlocklyDuino is based on [Blockly](http://code.google.com/p/blockly/), the web-b
 * Load the code to an Arduino Board
 * Load different examples with url parameters
 
+![WebApp screenshot](https://raw.githubusercontent.com/carlospamg/BlocklyDuino-BtW/20c0cf5048f18556c606adf8f1c0e92210de5f5a/images/screenshot_1.png)
+
 ### Demo
 
 "BlocklyDuino for Behind the Wire" needs to be executed from a pc with Python and the Arduino IDE, however the original BlocklyDuino is a web tool which can be tested at
