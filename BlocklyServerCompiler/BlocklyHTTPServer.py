@@ -2,6 +2,8 @@ from __future__ import unicode_literals, absolute_import
 import os
 import BaseHTTPServer
 import SimpleHTTPServer
+import cgi
+import urlparse
 from BlocklyServerCompiler import BlocklyRequestHandler
 
 PORT = 8000
@@ -18,28 +20,56 @@ class BlocklyHTTPServer(SimpleHTTPServer.SimpleHTTPRequestHandler):
         """
         Serves the POST request, using form-like data
         """
-        #content_type = self.headers.getheader('content-type')
-        #TODO: Look for a non-decrecated content-type to replace form
-        #if not contentType.startswith('application/x-www-form-urlencoded'):
-        #    self.send_response(404, "oh, shiny!")
-        #    self.send_header('Content-type', 'text/plain')
-        #    self.end_headers()
-        #    self.wfile.write('Error: only accepting form data')
-        #    return
-        #post_variables = self.parse_POST()
-        #action = post_variables.get("action")[0]
-        
+        message_back = ''
+        parameters = None
+        content_type, parameters_dict = cgi.parse_header(
+            self.headers.getheader('content-type'))
         content_length = int(self.headers.getheader('content-length'))
-        data_string = self.rfile.read(content_length)
-        try:
-            message_back = '//Python test\n\r' + data_string
-        except Exception as e:
-            print(e)
-            print('There was an error manipulating the POST data!!!')
-            message_back = 'error'
 
-        sketch_path = BlocklyRequestHandler.create_sketch_from_string(message_back)
-        BlocklyRequestHandler.load_sketch(sketch_path)
+        if content_type == 'multipart/form-data':
+            parameters = cgi.parse_multipart(self.rfile, parameters_dict)
+            #TODO: deal with multipart form data, might not be necessary though
+        elif content_type == 'application/x-www-form-urlencoded':
+            parameters = urlparse.parse_qs(self.rfile.read(content_length), keep_blank_values=False)
+            for key in parameters:
+                print(str(key) + ": " + str(parameters[key]))
+            #parameters = cgi.FieldStorage(
+            #    fp=self.rfile,
+            #    headers=self.headers,
+            #    environ={'REQUEST_METHOD':'POST',
+            #             'CONTENT_TYPE':self.headers['Content-Type'], })
+            #for item in parameters.list:
+            #    print(item)
+        elif content_type == 'text/plain':
+            data_string = self.rfile.read(content_length)
+            try:
+                message_back = '//Python test\n\r' + data_string
+            except Exception as e:
+                print(e)
+                print('\nThere was an error manipulating the plain text data!!!')
+        else:
+            print('\nError, content type not recognised: ' + str(content_type))
+            self.send_response(404, "Upps, not found!")
+            self.send_header('Content-type', 'text/plain')
+            self.end_headers()
+            self.wfile.write('Error: invalid content type')
+            return
+
+        if message_back != '':
+            #sketch_path = BlocklyRequestHandler.create_sketch_from_string(message_back)
+            #BlocklyRequestHandler.load_sketch(sketch_path)
+            pass
+
+        if parameters:
+            for key in parameters:
+                if str(key) == 'compiler':
+                    if str(parameters[key]) == "['get']":
+                        message_back = BlocklyRequestHandler.get_compiler_path()
+                    elif str(parameters[key]) == "['set']":
+                        message_back = BlocklyRequestHandler.set_compiler_path()
+                else:
+                    print('Ups')
+
         self.send_response(200)
         self.send_header('Content-type', 'text/plain')
         self.end_headers()

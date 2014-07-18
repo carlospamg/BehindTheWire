@@ -41,7 +41,7 @@ class ServerCompilerSettings(object):
         pass
 
     def __initialise(self):
-        # Settings with accessors
+        # Create variables to be used with accessors
         self.__launch_IDE_only__ = None
         self.__compiler_dir__ = None
         self.__sketch_dir__ = None
@@ -57,9 +57,8 @@ class ServerCompilerSettings(object):
         self.__singleton_instance__ = None
 
     #
-    # Getters, Setters and defaults
+    # Compiler Directory accessors
     #
-    # Compiler Directory
     def get_compiler_dir(self):
         return self.__compiler_dir__
 
@@ -85,7 +84,9 @@ class ServerCompilerSettings(object):
     def set_compiler_dir_default(self):
         self.__compiler_dir__ = 'C:\\IDEs\\arduino-1.5.6-r2\\arduino.exe'
 
-    # Arduino Board and board lists
+    #
+    # Arduino Board and board lists accessors
+    #
     def get_arduino_board(self):
         return self.__arduino_board_key__
 
@@ -119,7 +120,9 @@ class ServerCompilerSettings(object):
             board_list.append(key)
         return board_list
 
-    # Sketch name
+    #
+    # Sketch name accessors
+    #
     def get_sketch_name(self):
         return self.__sketch_name__
 
@@ -142,7 +145,9 @@ class ServerCompilerSettings(object):
     def set_sketch_name_default(self):
          self.__sketch_name__ = 'BlocklyDuinoSketch'
 
-    # Sketch Directory
+    #
+    #  Sketch Directory accessors
+    #
     def get_sketch_dir(self):
         return self.__sketch_dir__
 
@@ -165,12 +170,14 @@ class ServerCompilerSettings(object):
     def set_sketch_dir_default(self):
         self.__sketch_dir__ = os.getcwd()
 
-    # Launch the IDE only
+    #
+    # Launch the IDE only  accessors
+    #
     def get_launch_ide_only(self):
         return self.__launch_IDE_only__
 
     def set_launch_ide_only(self, new_launch_ide_only):
-        if isinstance(new_launch_IDE_only, types.BooleanType):
+        if isinstance(new_launch_ide_only, types.BooleanType):
             self.__launch_IDE_only__ = new_launch_ide_only
         else:
             print('\nThe provided "Launch IDE only" boolean is not valid !!!')
@@ -184,9 +191,12 @@ class ServerCompilerSettings(object):
 
     launch_IDE_only = property(get_launch_ide_only, set_launch_ide_only)
 
-    def set_launch_ide_only_default(cls):
-        cls.__launch_IDE_only__ = False
+    def set_launch_ide_only_default(self):
+        self.__launch_IDE_only__ = True
 
+    #
+    # Communications Port accessors
+    #
     # TODO: COM port accessors properly
     def get_com_port(self):
         return self.__com_port__
@@ -230,15 +240,16 @@ class ServerCompilerSettings(object):
             'Arduino_Sketch', 'sketch_name', self.sketch_name)
         settings_parser.set(
             'Arduino_Sketch', 'sketch_directory', self.sketch_dir)
+
         # Set the path and create/overwrite the file
         try:
             settings_file = open(self.get_settings_file_path(), 'w')
             settings_parser.write(settings_file)
             settings_file.close()
-            print('Settings file saved to:')
+            print('\nSettings file saved to:')
         except Exception as e:
             print(e)
-            print('Unable to write the settings file to:')
+            print('\nUnable to write the settings file to:')
         print('\t' + self.get_settings_file_path())
 
     def read_settings(self):
@@ -254,11 +265,13 @@ class ServerCompilerSettings(object):
             self.com_port = settings_dict['arduino_com_port']
             self.sketch_name = settings_dict['sketch_name']
             self.sketch_dir = settings_dict['sketch_directory']
-            print('\nFinal settings loaded:')
         else:
-            print('\nSettings will be set to defaults:')
+            print('\nSettings will be set to the default values.')
             self.set_default_settings()
+            self.save_settings()
+
         # Printing the settings to be able to easily spot issues at load
+        print('\nFinal settings loaded:')
         print('\tCompiler directory: ' + self.__compiler_dir__)
         print('\tArduino Board Key: ' + self.__arduino_board_key__)
         print('\tArduino Board Value: ' + self.__arduino_board_value__)
@@ -268,7 +281,7 @@ class ServerCompilerSettings(object):
 
     def read_settings_file(self):
         """
-        Creates a dictionary from the settings stored in a file
+        Creates a dictionary from the settings stored in a file.
         :return: A dictionary with all the options and values from the settings
                  file (sections are ignored during parsing).
         """
@@ -286,10 +299,9 @@ class ServerCompilerSettings(object):
                 settings_parser.get('Arduino_Sketch', 'sketch_name')
             settings_dict['sketch_directory'] =\
                 settings_parser.get('Arduino_Sketch', 'sketch_directory')
-            print('Settings loaded from:')
+            print('\nSettings loaded from:')
         except Exception as e:
-            print(e)
-            print('Could not read settings file from: !!!')
+            print('\nSettings file corrupted or not found in:')
             settings_dict = None
         print('\t' + self.get_settings_file_path())
         return settings_dict
@@ -299,9 +311,14 @@ class ServerCompilerSettings(object):
             os.remove(self.get_settings_file_path())
 
     def get_settings_file_path(self):
+        """
+        Returns the settings file path or creates the path if not invoked before.
+        The file is saved in the same directory as this python source code file.
+        :return: path to the settings file
+        """
         if not self.__settings_path__:
             self.__settings_path__ = os.path.join(
-                os.getcwd(), self.__settings_filename__)
+                os.path.dirname(__file__), self.__settings_filename__)
         return self.__settings_path__
 
     def get_board_value_from_key(self, string_key):

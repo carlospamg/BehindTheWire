@@ -26,11 +26,13 @@ def open_browser():
 
 
 def main(): 
-    print('Running Python version ' + platform.python_version() + "\n")
+    print('Running Python version ' + platform.python_version())
+    print("\n======= Reading Settings =======")
     BlocklyServerCompiler.ServerCompilerSettings.ServerCompilerSettings()
     open_browser()
+    print("\n======= Starting Server =======")
     BlocklyServerCompiler.BlocklyHTTPServer.start_server(os.getcwd())
-    
+
 
 if __name__ == "__main__":
     main()

@@ -74,10 +74,15 @@ def set_compiler_path():
     """
     current_path = get_compiler_path()
     new_path = browse_file()
+
     if new_path != '':
         ServerCompilerSettings().compiler_dir = new_path
         if current_path != get_compiler_path():
             ServerCompilerSettings().save_settings()
+    else:
+        new_path = None
+
+    return new_path
 
 
 def get_compiler_path():
