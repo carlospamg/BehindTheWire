@@ -8,12 +8,14 @@
 
 <body>
    <div class="settings_div">
-      <!--input type="file" id="compiler_inputfile" onchange="set_compiler_location_js(this, 'compilerLocation');" /-->
-      <!--button onclick="click_element('compiler_inputfile')">Compiler:</button-->
-      <button onclick="set_compiler_location_py('compilerLocation')">Compiler:</button>
-      <input type="text" id="compilerLocation" readonly="readonly" style="width: 250px ;"/>
+      <button onclick="request_new_compiler_location('compilerLocationTextField')">Compiler:</button>
+      <input type="text" id="compilerLocationTextField" readonly="readonly" style="width: 250px ;"/>
    </div>
-
+   <div class="settings_div">
+      <button onclick="request_new_sketch_location('sketchLocationTextField')">Sketch Folder:</button>
+      <input type="text" id="sketchLocationTextField" readonly="readonly" style="width: 250px ;"/>
+   </div>
+   
    <div class="settings_div">
       Arduino Board:
       <select name="board">
@@ -35,7 +37,14 @@
    </div>
 
    <div class="settings_div">
-      <input type="checkbox" name="onlyIde" value="loadOnlyIDE" />Only Load IDE (no compile/upload)
+      <input type="checkbox" id="onlyIde" onclick="set_ide_only()"/>Only Load IDE (no compile/upload)
    </div>
+   
+   <!-- Executed at the end to reduce load time -->
+   <script>
+      get_ide_only();
+      get_compiler_location();
+      get_sketch_location();
+   </script>
 </body>
 </html>
