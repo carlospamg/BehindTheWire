@@ -18,9 +18,10 @@ def open_browser():
     """ Start a browser after waiting for half a second. """
 
     def _open_browser():
-        webbrowser.open('http://%s:%s/' %
+        webbrowser.open('http://%s:%s/%s' %
                         (BlocklyServerCompiler.BlocklyHTTPServer.ADDRESS,
-                         BlocklyServerCompiler.BlocklyHTTPServer.PORT))
+                         BlocklyServerCompiler.BlocklyHTTPServer.PORT,
+                         'blockly/apps/blocklyduino/index.html'))
 
     thread = threading.Timer(0.5, _open_browser)
     thread.start()
