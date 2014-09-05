@@ -10,8 +10,31 @@ import os
 import platform
 import threading
 import webbrowser
-import BlocklyServerCompiler.ServerCompilerSettings
-import BlocklyServerCompiler.BlocklyHTTPServer
+try:
+    # 2.x name
+    import BaseHTTPServer
+    from SimpleHTTPServer import SimpleHTTPRequestHandler
+except ImportError:
+    # 3.x name
+    import http.server as BaseHTTPServer
+    from http.server import SimpleHTTPRequestHandler as SimpleHTTPRequestHandler
+
+    
+ADDRESS = 'localhost'
+PORT = 8000
+
+
+def start_server(document_root):
+    """ Start the server with the document root indicated by argument """
+    print('\nSetting HTTP Server Document Root to: \n\t' + document_root + "\n")
+    os.chdir(document_root)
+    server_class  = BaseHTTPServer.HTTPServer
+    server_address = (ADDRESS, PORT)
+    handler_class = SimpleHTTPRequestHandler
+    server = server_class(server_address, handler_class)
+    print('Launching the HTTP service...')
+    server.serve_forever()
+    print('The Server closed unexpectedly!!')
 
 
 def open_browser():
@@ -19,24 +42,16 @@ def open_browser():
 
     def _open_browser():
         webbrowser.open('http://%s:%s/%s' %
-                        (BlocklyServerCompiler.BlocklyHTTPServer.ADDRESS,
-                         BlocklyServerCompiler.BlocklyHTTPServer.PORT,
-                         'blockly/apps/blocklyduino/index.html'))
+                        (ADDRESS, PORT, 'blockly/apps/blocklyduino/index.html'))
 
     thread = threading.Timer(0.5, _open_browser)
     thread.start()
 
 
 def main():
-    """
-    Initialises the Settings singleton and starts the HTTP Server
-    """
     print('Running Python version ' + platform.python_version())
-    print("\n======= Loading Settings =======")
-    BlocklyServerCompiler.ServerCompilerSettings.ServerCompilerSettings()
     open_browser()
-    print("\n======= Starting Server =======")
-    BlocklyServerCompiler.BlocklyHTTPServer.start_server(os.getcwd())
+    start_server(os.getcwd())
 
 
 if __name__ == "__main__":
