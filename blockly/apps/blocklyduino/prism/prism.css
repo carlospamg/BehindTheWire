@@ -13,7 +13,7 @@ pre[class*="language-"] {
 	font-size: 95%;
 	direction: ltr;
 	text-align: left;
-	white-space: pre;
+	white-space: pre!important;
 	word-spacing: normal;
 	word-break: normal;
 
@@ -51,7 +51,7 @@ pre[class*="language-"],
 code[class*="language-"] {
 	padding: 0;
 	margin: 0 0;
-	white-space: pre;
+	white-space: pre!important;
 	overflow: visible;
 }
 

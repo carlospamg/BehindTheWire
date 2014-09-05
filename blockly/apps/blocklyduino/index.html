@@ -6,19 +6,18 @@
   <link rel="stylesheet" type="text/css" href="blockyduino.css">
   <link rel="stylesheet" type="text/css" href="prism/prism.css">
   <script type="text/javascript" src="prism/prism.js"></script>
-  <script type="text/javascript" src="../prettify.js"></script>
   <script type="text/javascript" src="Blob.js"></script>
   <script type="text/javascript" src="FileSaver.min.js"></script>
   <script type="text/javascript" src="blockly_helper.js"></script>
   <script type="text/javascript" src="blocklyduino.js"></script>
-  <!--script type="text/javascript" src="../loadsketch/ArduApplet.js"></script-->
+  <script type="text/javascript" src="../loadsketch/ArduApplet.js"></script>
   <script type="text/javascript" src="../loadsketch/ArduServerCompiler.js"></script>
 </head>
 <body>
   <table height="100%" width="100%">
-    <tr>
+    <tr> 
       <td>
-        <h1><a href="https://github.com/carlospamg/BlocklyDuino-BtW">BlocklyDuino for Behind the Wire</a> &gt; Visual programming editor for arduino</h1>
+        <h1><a href="https://github.com/carlospamg/BlocklyDuino-BtW">BlocklyDuino for Behind the Wire</h1>
       </td>
     </tr>
     <tr>
@@ -31,15 +30,14 @@
             <td class="tabmin">&nbsp;</td>
             <td id="tab_xml" class="taboff" onclick="tabClick(this.id)">XML</td>
             <td class="tabmax">
-              <!--applet code=ArduinoAppletPackage.ArduinoApplet.class archive="../loadsketch/ArduinoApplet.jar" name="ArduApplet" id ="ArduApplet" width="500" height="75"> </applet-->
+              <applet code=ArduinoAppletPackage.ArduinoApplet.class archive="../loadsketch/ArduinoApplet.jar" name="ArduApplet" id ="ArduApplet" width="490" height="60"> </applet>
               <span id="peekCode" style="display:none;">Peek at Code<input type="checkbox" id="peekCodeCheck" onclick="peekArduinoCode()"/></span>
               <!--button onclick="renderArduinoCode(null)">Render</button-->
               <button onclick="discard()">Discard</button>
               <button onclick="save()">Save XML</button>
               <button id="fakeload">Load XML</button>
               <input type="file" id="load" style="display: none;"/>
-              <button onclick="open_settings()">Settings</button>
-              <button class="launch" onclick="send_sketch_to_server()">Run Program</button>
+              <!--button class="launch" onclick="">Run Program</button-->
             </td>
           </tr>
         </table>
@@ -47,17 +45,19 @@
     </tr>
     <tr >
       <td height="99%" style="background:#eee;position:relative;">
-        <div id="content_blocks" class="content_block">
-          <iframe id="iframe_blocks" src="frame.html"></iframe>
-        </div>
-        <div id="arduino_code_peek">
-          <pre id="arduino_pre"><code id="arduino_code" class="language-arduino">code goes here</code></pre>
-        </div>
-        <div id="content_arduino">
-          <textarea id="textarea_arduino" wrap="off" readonly></textarea>
-        </div>
-        <div id="content_xml">
-          <textarea id="textarea_xml" readonly></textarea>
+        <div id="content_area" class="content_area">
+          <div id="content_blocks" class="content_block">
+            <iframe id="iframe_blocks" src="frame.html"></iframe>
+          </div>
+          <div id="arduino_code_peek">
+            <pre id="arduino_pre"><code id="arduino_code" class="language-arduino">code goes here</code></pre>
+          </div>
+          <div id="content_arduino">
+            <textarea id="textarea_arduino" wrap="off" readonly></textarea>
+          </div>
+          <div id="content_xml">
+            <textarea id="textarea_xml" readonly></textarea>
+          </div>
         </div>
       </td>
     </tr>

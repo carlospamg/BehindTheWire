@@ -422,7 +422,7 @@ Prism.languages.cpp = Prism.languages.extend('c', {
 ;
 Prism.languages.arduino = Prism.languages.extend('cpp', {
 	'property': {
-		pattern: /#[a-zA-Z]+\ .*|\b(setup|loop)\b/g,
+		pattern: /#[a-zA-Z]+\ .*|\b(void setup|void loop)\b/g,
 		inside: {
 			punctuation: /\(/,
 			property: /&lt;[a-zA-Z.]+>/g
