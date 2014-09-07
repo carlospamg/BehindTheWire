@@ -42,7 +42,7 @@ def open_browser():
 
     def _open_browser():
         webbrowser.open('http://%s:%s/%s' %
-                        (ADDRESS, PORT, 'blockly/apps/blocklyduino/index.html'))
+                        (ADDRESS, PORT, 'blockly/apps/btw/index.html'))
 
     thread = threading.Timer(0.5, _open_browser)
     thread.start()
