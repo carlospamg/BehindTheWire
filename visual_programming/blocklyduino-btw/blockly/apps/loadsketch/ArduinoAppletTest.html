@@ -1,0 +1,46 @@
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=Cp1252"/>
+<head>
+
+   <title> Java Applet Test </title>
+   <script>
+      function getSketchString() {
+         return document.getElementById("sketchTextArea").value;
+      }
+
+      function displaySketchInAlert() {
+         alert(getSketchString());
+      }
+
+      function sendSketchToApplet() {
+         var myApp = document.applets['ArduApplet'];
+         myApp.processSketch(getSketchString());
+         document.getElementById("sketchTextArea").value =  'TEST' + document.getElementById("sketchTextArea").value;
+      }
+   </script>
+
+</head>
+
+<body>
+
+   <p>This is the html file in the "blockly\apps\loadsketch" directory.</p>
+
+   <textarea rows="10" cols="500" name="sketchCode" id="sketchTextArea">
+int led = 13; //from html
+void setup() {
+  pinMode(led, OUTPUT);
+}
+void loop() {
+  digitalWrite(led, HIGH);
+  delay(1000);
+  digitalWrite(led, LOW);
+  delay(1000);
+}
+   </textarea>
+
+   <button type="button" onclick="sendSketchToApplet()">Send Sketch to the Applet!</button> 
+
+   <applet code=ArduinoAppletPackage.ArduinoApplet.class archive="ArduinoApplet.jar" name="ArduApplet" id ="ArduApplet" width="500" height="75"> </applet>
+
+</body>
+</html>

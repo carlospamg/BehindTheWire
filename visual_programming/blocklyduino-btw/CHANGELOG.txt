@@ -1,0 +1,23 @@
+BlocklyDuino for Behind the Wire
+=======================
+
+0.1 03/06/2014
+First released based on Blocklyduino. Changes to the original software include:
+
+New features:
+- Custom blocks for Behind the Wire kit include:
+    - To be defined
+- Java Applet to load code to Arduino Uno
+    -
+
+Removed functionality:
+- Removed unused functionality from BlocklyDuino (To be defined)
+
+
+License
+-----------------
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0

@@ -1,0 +1,191 @@
+html {
+  height: 100%!important;
+}
+body {
+  background-color: white;
+  font-family: sans-serif;
+  margin: 0;
+  border: 0;
+  overflow: hidden;
+  padding: 15px 15px 15px 15px;
+
+  /* Firefox */
+  height: -moz-calc(100% - 30px);
+  /* WebKit */
+  height: -webkit-calc(100% - 30px);
+  /* Opera */
+  height: -o-calc(100% - 30px);
+  /* Standard */
+  height: calc(100% - 30px);
+}
+.blocklySvg {
+  height: 100%;
+  width: 100%;
+}
+h1 {
+  font-weight: normal;
+  font-size: 140%;
+}
+td {
+  vertical-align: top;
+}
+
+/* Tabs */
+#tabRow>td {
+  border: 1px solid #ccc;
+}
+td.tabon {
+  border-bottom-color: #ddd !important;
+  background-color: #ddd;
+  padding: 5px 19px;
+}
+td.taboff {
+  cursor: pointer;
+  padding: 5px 19px;
+}
+td.taboff:hover {
+  background-color: #eee;
+}
+td.tabmin {
+  border-top-style: none !important;
+  border-left-style: none !important;
+  border-right-style: none !important;
+}
+td.tabmax {
+  border-top-style: none !important;
+  border-left-style: none !important;
+  border-right-style: none !important;
+  width: 99%;
+  text-align: right;
+}
+
+table {
+  border-collapse: collapse;
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+td {
+  padding: 0;
+}
+
+#content_xml,
+#content_arduino {
+  background-color: white;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  border: 1px solid #ccc;
+  border-top-style: none;
+  overflow: hidden;
+  display: none;
+}
+#arduino_code_peek {
+  position: absolute;
+  width: 29%;
+  height: 100%!important;
+  right: 0px;
+  bottom: 0px;
+  float: right;
+  padding: 0;
+  margin: 0;
+  border: 0!important;
+  background-color: #eee;
+  overflow: scroll!important;
+  display: none;
+}
+#arduino_code_peek pre,
+#arduino_code_peek code {
+  border: 0!important;
+  overflow: visible;
+  white-space: pre!important;
+}
+.content_area {
+  /* Firefox */
+  width: -moz-calc(100%)!important;
+  /* WebKit */
+  width: -webkit-calc(100%)!important;
+  /* Opera */
+  width: -o-calc(100%)!important;
+  /* Standard */
+  width: calc(100%)!important;
+  height: 100%!important;
+  padding: 0;
+  margin: 0;
+  border-width: 0px 1px 1px 1px;
+  border-style: solid;
+  border-color: #ccc;
+  background-color: #eee;
+  position: absolute;
+  overflow: hidden;
+}
+.content_block {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  border: 1px solid #ccc;
+  border-top-style: none;
+  overflow: hidden;
+}
+.content_block_peek {
+  width: 70%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  border: 1px solid #ccc;
+  border-top-style: none;
+  overflow: hidden;
+  float: left;
+}
+#textarea_xml,
+#textarea_arduino {
+  width: 100%;
+  height: 100%;
+  border: none;
+  background-color: transparent;
+  resize: none;
+}
+iframe {
+  width: 100%;
+  height: 100%;
+  border: 1px solid #ccc;
+  border-top-style: none;
+}
+button {
+  padding: 1px 1em;
+  font-size: 90%;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  background-color: #eee;
+  color: black;
+}
+button.launch {
+  border: 1px solid #d43;
+  background-color: #d43;
+  color: white;
+}
+button:active {
+  border: 1px solid blue !important;
+}
+button:hover {
+  box-shadow: 2px 2px 5px #888;
+}
+input.file {
+  padding: 1px 1em;
+  font-size: 90%;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  background-color: #eee;
+  color: black;
+}
+input.file:active {
+  border: 1px solid blue !important;
+}
+input.file:hover {
+  box-shadow: 2px 2px 5px #888;
+}
+div.settings_div {
+  padding: 5px;
+}

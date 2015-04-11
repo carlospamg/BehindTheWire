@@ -1,0 +1,65 @@
+<html manifest=node.manifest>
+<head>
+  <meta charset="utf-8">
+  <title>BlocklyDuino for Behind the Wire</title>
+  <link rel="icon" type="image/png" href="../../media/favicon/favicon.png">
+  <link rel="stylesheet" type="text/css" href="blockyduino.css">
+  <link rel="stylesheet" type="text/css" href="prism/prism.css">
+  <script type="text/javascript" src="prism/prism.js"></script>
+  <script type="text/javascript" src="Blob.js"></script>
+  <script type="text/javascript" src="FileSaver.min.js"></script>
+  <script type="text/javascript" src="blockly_helper.js"></script>
+  <script type="text/javascript" src="blocklyduino.js"></script>
+  <script type="text/javascript" src="../loadsketch/ArduApplet.js"></script>
+</head>
+<body>
+  <table height="100%" width="100%">
+    <tr> 
+      <td>
+        <h1><a href="https://github.com/carlospamg/BlocklyDuino-BtW">BlocklyDuino for Behind the Wire</h1>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <table>
+          <tr id="tabRow" height="1em">
+            <td id="tab_blocks" class="tabon" onclick="tabClick(this.id)">Blocks</td>
+            <td class="tabmin">&nbsp;</td>
+            <td id="tab_arduino" class="taboff" onclick="tabClick(this.id)">Arduino</td>
+            <td class="tabmin">&nbsp;</td>
+            <td id="tab_xml" class="taboff" onclick="tabClick(this.id)">XML</td>
+            <td class="tabmax">
+              <applet code=ArduinoAppletPackage.ArduinoApplet.class archive="../loadsketch/ArduinoApplet.jar" name="ArduApplet" id ="ArduApplet" width="490" height="60"> </applet>
+              <span id="peekCode" style="display:none;">Peek at Code<input type="checkbox" id="peekCodeCheck" onclick="peekArduinoCode()"/></span>
+              <!--button onclick="renderArduinoCode(null)">Render</button-->
+              <button onclick="discard()">Discard</button>
+              <button onclick="save()">Save XML</button>
+              <button id="fakeload">Load XML</button>
+              <input type="file" id="load" style="display: none;"/>
+              <!--button class="launch" onclick="">Run Program</button-->
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+    <tr >
+      <td height="99%" style="background:#eee;position:relative;">
+        <div id="content_area" class="content_area">
+          <div id="content_blocks" class="content_block">
+            <iframe id="iframe_blocks" src="frame.html"></iframe>
+          </div>
+          <div id="arduino_code_peek">
+            <pre id="arduino_pre"><code id="arduino_code" class="language-arduino">code goes here</code></pre>
+          </div>
+          <div id="content_arduino">
+            <textarea id="textarea_arduino" wrap="off" readonly></textarea>
+          </div>
+          <div id="content_xml">
+            <textarea id="textarea_xml" readonly></textarea>
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
